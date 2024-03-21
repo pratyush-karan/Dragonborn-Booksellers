@@ -209,7 +209,7 @@
     grid-template-columns: repeat(2, 50%);
   }
 }
-
+/* 
 @media (prefers-color-scheme: dark) {
   .vercelLogo {
     filter: invert(1);
@@ -227,4 +227,4 @@
   to {
     transform: rotate(0deg);
   }
-}
+} */

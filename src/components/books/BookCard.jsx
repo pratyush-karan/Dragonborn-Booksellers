@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import styles from "./BookCard.module.scss";
-import { FaEye } from "react-icons/fa";
-import { FaCartPlus } from "react-icons/fa6";
+// import { FaEye } from "react-icons/fa";
+// import { FaCartPlus } from "react-icons/fa6";
 import BookViewModal from "../modals/BookViewModal";
 
 function BookListingCard({ book }) {
@@ -31,11 +31,11 @@ function BookListingCard({ book }) {
       </div>
       <div className={styles["button-container"]}>
         <button onClick={openModal}>
-          <FaEye />
+          {/* <FaEye /> */}
           <span>View</span>
         </button>
         <button>
-          <FaCartPlus />
+          {/* <FaCartPlus /> */}
           <span>Add to Cart</span>
         </button>
       </div>

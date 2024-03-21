@@ -1,36 +1,35 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { searchBooks } from "@/services/googleBookServices";
-import styles from "./BooksListing.module.scss";
-import BookCard from "./BookListingCard";
+import styles from "./BookListing.module.scss";
+import BookCard from "./BookCard";
 import { useRouter } from "next/navigation";
 
-function BookListing({ searchParams }) {
+function BookListing({ searchParams, initialBooks }) {
   const router = useRouter();
   const page = useRef(0);
   const [query, setQuery] = useState("");
-  const [books, setBooks] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [books, setBooks] = useState(initialBooks);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const handleSubmit = (e) => {
     if (query.trim()) {
       e.preventDefault();
-      router.push(`/books?query=${query}`);
+      router.replace(`/books?query=${query}`);
     }
   };
 
   const fetchBooks = async (currentPage) => {
-    const res = await searchBooks(searchParams.query, currentPage);
+    const res = await searchBooks(searchParams?.query, currentPage);
     setIsLoading(false);
     return res.items;
   };
 
   useEffect(() => {
-    const initialFetch = async () => setBooks(await fetchBooks(page.current));
-
-    initialFetch();
-  }, [searchParams]);
+    // Update state when `initialBooks` prop changes
+    setBooks(initialBooks);
+  }, [initialBooks]);
 
   const handleNextPage = async () => {
     setIsLoading(true);
@@ -57,7 +56,11 @@ function BookListing({ searchParams }) {
       });
       observer.observe(loadingRef.current);
     }
-    return () => observer.unobserve(loadingRef.current);
+    return () => {
+      if (observer && loadingRef.current) {
+        observer.unobserve(loadingRef.current);
+      }
+    };
   }, [loadingRef, isLoading]);
 
   return (
@@ -75,7 +78,7 @@ function BookListing({ searchParams }) {
           <button type="submit">Search</button>
         </form>
         {isLoading && <p>Loading books...</p>}
-        {books.length > 0 && (
+        {books?.length > 0 && (
           <div className={styles[`book-list`]}>
             {books.map((book) => (
               <BookCard book={book} key={book.id} />
