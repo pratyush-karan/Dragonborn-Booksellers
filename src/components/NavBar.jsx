@@ -18,13 +18,36 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-
+import { useRouter } from "next/navigation";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 const Links = ["Home", "Books", "My Library", "Profile"];
 
 const NavLink = (props) => {
   const { children } = props;
+
+  const router = useRouter();
+  const routing = (key) => {
+    let route = "";
+    switch (key) {
+      case "Home":
+        route = "/";
+        break;
+      case "Books":
+        route = "/books";
+        break;
+      case "My Library":
+        route = "/mylibrary";
+        break;
+      case "Profile":
+        route = "/profile";
+        break;
+      case "Cart":
+        route = "/cart";
+        break;
+    }
+    router.push(route);
+  };
 
   return (
     <Box
@@ -35,8 +58,9 @@ const NavLink = (props) => {
       _hover={{
         textDecoration: "none",
         bg: useColorModeValue("gray.200", "gray.700"),
+        cursor: "pointer",
       }}
-      href={"#"}
+      onClick={() => routing(children)}
     >
       {children}
     </Box>
@@ -46,6 +70,7 @@ const NavLink = (props) => {
 export default function NavBar(props) {
   const { data: session } = useSession();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const router = useRouter();
   const handleLogout = () => {
     signOut();
   };
@@ -53,6 +78,7 @@ export default function NavBar(props) {
   const handleSignIn = () => {
     signIn();
   };
+
   return (
     <>
       {console.log(session)}
@@ -78,7 +104,9 @@ export default function NavBar(props) {
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
-            <Box p="2">Cart</Box>
+            <Box p="2">
+              <NavLink>Cart</NavLink>
+            </Box>
             <Box p="2">
               {session ? (
                 <Menu>
@@ -92,8 +120,12 @@ export default function NavBar(props) {
                     <Avatar size={"sm"} src={`${session.user.image}`} />
                   </MenuButton>
                   <MenuList>
-                    <MenuItem>Your Orders</MenuItem>
-                    <MenuItem>Your WishList</MenuItem>
+                    <MenuItem onClick={() => router.push("/orders")}>
+                      Your Orders
+                    </MenuItem>
+                    <MenuItem onClick={() => router.push("/wishlist")}>
+                      Your WishList
+                    </MenuItem>
                     <MenuDivider />
                     <MenuItem onClick={handleLogout}>LogOut</MenuItem>
                   </MenuList>
@@ -120,7 +152,9 @@ export default function NavBar(props) {
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4}>
               {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
+                <NavLink key={link} onClick={() => routing(link)}>
+                  {link}
+                </NavLink>
               ))}
             </Stack>
           </Box>
