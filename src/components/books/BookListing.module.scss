@@ -6,20 +6,10 @@
   height: 100%;
 }
 
-.input {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  margin: 50px 0px;
-  gap: 20px;
-  button {
-    white-space: normal;
-  }
-}
 .book-list {
   width: 100%;
   text-align: center;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
 }

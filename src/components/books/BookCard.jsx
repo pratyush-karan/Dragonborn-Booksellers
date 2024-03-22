@@ -1,8 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import styles from "./BookCard.module.scss";
-// import { FaEye } from "react-icons/fa";
-// import { FaCartPlus } from "react-icons/fa6";
 import BookViewModal from "../modals/BookViewModal";
 
 import {
@@ -102,32 +100,6 @@ function BookListingCard({ book }) {
         }}
       />
     </>
-    // <div className={styles.container}>
-    //   <img
-    //     src={book.volumeInfo.imageLinks?.thumbnail}
-    //     alt={book.volumeInfo.title}
-    //     className={styles[`book-image`]}
-    //   />
-    //   <div className={styles[`book-details`]}>
-    //     <div className={styles[`book-title`]}>{book.volumeInfo.title}</div>
-    //     {book.volumeInfo.authors?.map((author, index) => (
-    //       <div className={styles[`book-author`]} key={`author-${index}`}>
-    //         {author}
-    //       </div>
-    //     ))}
-    //   </div>
-    //   <div className={styles["button-container"]}>
-    //     <button onClick={openModal}>
-    //       {/* <FaEye /> */}
-    //       <span>View</span>
-    //     </button>
-    //     <button>
-    //       {/* <FaCartPlus /> */}
-    //       <span>Add to Cart</span>
-    //     </button>
-    //   </div>
-
-    // </div>
   );
 }
 

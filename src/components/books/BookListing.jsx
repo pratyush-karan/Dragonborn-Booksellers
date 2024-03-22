@@ -4,7 +4,7 @@ import { searchBooks } from "@/services/googleBookServices";
 import styles from "./BookListing.module.scss";
 import BookCard from "./BookCard";
 import { useRouter } from "next/navigation";
-import { Spinner, Input, Button } from "@chakra-ui/react";
+import { Stack, Spinner, Input, Button } from "@chakra-ui/react";
 
 function BookListing({ searchParams, initialBooks }) {
   const router = useRouter();
@@ -67,20 +67,23 @@ function BookListing({ searchParams, initialBooks }) {
     <>
       <div className={styles.container}>
         {console.log("books", books)}
-        <h1>Search Books</h1>
-        <form onSubmit={handleSubmit}>
-          <div className={styles.input}>
-            <Input
-              variant="filled"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Enter book title or author"
-            />
-            <Button colorScheme="yellow" type="submit">
-              Search Books
-            </Button>
-          </div>
-        </form>
+        <Stack spacing={5} direction="row" align="center" margin={10}>
+          <Input
+            variant="filled"
+            size="md"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Enter book title or author"
+          />
+          <Button
+            colorScheme="yellow"
+            onClick={handleSubmit}
+            paddingInline={10}
+            size="md"
+          >
+            Search Books
+          </Button>
+        </Stack>
         {books?.length > 0 && (
           <div className={styles[`book-list`]}>
             {books.map((book) => (
