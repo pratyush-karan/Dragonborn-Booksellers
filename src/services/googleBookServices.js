@@ -10,8 +10,13 @@ export async function searchBooks(
   const apiKey = process.env.GOOGLE_BOOKS_API_KEY;
 
   const res = await fetch(
-    `${BASE_URL}?q=${query}&startIndex=${startIndex}&maxResults=${current_max_results}&orderBy=${orderBy}&key=${apiKey}`,
-    { cache: "no-store" }
+    `${BASE_URL}?q=${query}&startIndex=${startIndex}&maxResults=${current_max_results}&orderBy=${orderBy}`,
+    {
+      cache: "no-store",
+      headers: {
+        "X-API-KEY": apiKey,
+      },
+    }
   );
   const result = await res.json();
   return result;

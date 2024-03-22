@@ -5,40 +5,85 @@ import styles from "./BookCard.module.scss";
 // import { FaCartPlus } from "react-icons/fa6";
 import BookViewModal from "../modals/BookViewModal";
 
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Stack,
+  Heading,
+  Divider,
+  ButtonGroup,
+  Button,
+  Image,
+  Text,
+} from "@chakra-ui/react";
+
 function BookListingCard({ book }) {
   const [isOpen, setIsOpen] = useState();
-  const openModal = () => {
-    setIsOpen(true);
-  };
+
   const closeModal = () => {
     setIsOpen(false);
   };
+  const saleability = book.saleInfo.saleability === "FOR_SALE" ? true : false;
+
+  const format = (arr) => {
+    if (!arr) return "";
+    if (arr.length === 1) return arr[0];
+    else {
+      return arr.join(",");
+    }
+  };
+
+  let formatter;
+  if (saleability) {
+    formatter = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: book.saleInfo.retailPrice.currencyCode,
+    });
+  }
 
   return (
-    <div className={styles.container}>
-      <img
-        src={book.volumeInfo.imageLinks?.thumbnail}
-        alt={book.volumeInfo.title}
-        className={styles[`book-image`]}
-      />
-      <div className={styles[`book-details`]}>
-        <div className={styles[`book-title`]}>{book.volumeInfo.title}</div>
-        {book.volumeInfo.authors?.map((author, index) => (
-          <div className={styles[`book-author`]} key={`author-${index}`}>
-            {author}
-          </div>
-        ))}
-      </div>
-      <div className={styles["button-container"]}>
-        <button onClick={openModal}>
-          {/* <FaEye /> */}
-          <span>View</span>
-        </button>
-        <button>
-          {/* <FaCartPlus /> */}
-          <span>Add to Cart</span>
-        </button>
-      </div>
+    <>
+      <Card maxW="sm" className={styles[`card`]}>
+        <CardBody className={styles[`card-body`]}>
+          <Image
+            src={book.volumeInfo.imageLinks?.thumbnail}
+            alt={book.volumeInfo.title}
+            borderRadius="lg"
+            height={150}
+          />
+          <Stack mt="6" spacing="3">
+            <Heading size="md">{book.volumeInfo.title}</Heading>
+            <Text>{format(book.volumeInfo.authors)}</Text>
+            <Text color="blue.600" fontSize="2xl" className={styles[`price`]}>
+              {saleability ? (
+                <>
+                  <span>
+                    {formatter.format(book.saleInfo.retailPrice.amount)}
+                  </span>
+                  <span className={styles[`strike-through`]}>
+                    {formatter.format(book.saleInfo.listPrice.amount)}
+                  </span>
+                </>
+              ) : (
+                <>Not For Sale!</>
+              )}
+            </Text>
+          </Stack>
+        </CardBody>
+        <Divider />
+        <CardFooter className={styles[`footer`]}>
+          <ButtonGroup spacing="2">
+            <Button variant="solid" colorScheme="blue">
+              Buy now
+            </Button>
+            <Button variant="ghost" colorScheme="blue">
+              Add to cart
+            </Button>
+          </ButtonGroup>
+        </CardFooter>
+      </Card>
       <BookViewModal
         isOpen={isOpen}
         onClose={closeModal}
@@ -48,7 +93,7 @@ function BookListingCard({ book }) {
         otherDetails={{
           genre: book.volumeInfo.categories,
           isbn: book.volumeInfo.industryIdentifiers?.[0].identifier,
-          saleability: book.saleInfo.saleability === "FOR_SALE" ? true : false,
+          saleability: saleability,
           authors: book.volumeInfo.authors,
           price: {
             retailPrice: book.saleInfo.retailPrice,
@@ -56,7 +101,33 @@ function BookListingCard({ book }) {
           },
         }}
       />
-    </div>
+    </>
+    // <div className={styles.container}>
+    //   <img
+    //     src={book.volumeInfo.imageLinks?.thumbnail}
+    //     alt={book.volumeInfo.title}
+    //     className={styles[`book-image`]}
+    //   />
+    //   <div className={styles[`book-details`]}>
+    //     <div className={styles[`book-title`]}>{book.volumeInfo.title}</div>
+    //     {book.volumeInfo.authors?.map((author, index) => (
+    //       <div className={styles[`book-author`]} key={`author-${index}`}>
+    //         {author}
+    //       </div>
+    //     ))}
+    //   </div>
+    //   <div className={styles["button-container"]}>
+    //     <button onClick={openModal}>
+    //       {/* <FaEye /> */}
+    //       <span>View</span>
+    //     </button>
+    //     <button>
+    //       {/* <FaCartPlus /> */}
+    //       <span>Add to Cart</span>
+    //     </button>
+    //   </div>
+
+    // </div>
   );
 }
 

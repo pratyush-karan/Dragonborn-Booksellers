@@ -3,34 +3,23 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 2rem;
-
-  form {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
-    input[type="text"] {
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 16px;
-      width: 300px;
-      margin-right: 20px;
-    }
-
-    button[type="submit"] {
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-  }
+  height: 100%;
 }
 
+.input {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin: 50px 0px;
+  gap: 20px;
+  button {
+    white-space: normal;
+  }
+}
 .book-list {
+  width: 100%;
+  text-align: center;
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-start;
 }

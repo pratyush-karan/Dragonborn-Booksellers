@@ -4,6 +4,7 @@ import { searchBooks } from "@/services/googleBookServices";
 import styles from "./BookListing.module.scss";
 import BookCard from "./BookCard";
 import { useRouter } from "next/navigation";
+import { Spinner, Input, Button } from "@chakra-ui/react";
 
 function BookListing({ searchParams, initialBooks }) {
   const router = useRouter();
@@ -11,12 +12,11 @@ function BookListing({ searchParams, initialBooks }) {
   const [query, setQuery] = useState("");
   const [books, setBooks] = useState(initialBooks);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   const handleSubmit = (e) => {
     if (query.trim()) {
       e.preventDefault();
-      router.replace(`/books?query=${query}`);
+      router.push(`/books?query=${query}`);
     }
   };
 
@@ -69,15 +69,18 @@ function BookListing({ searchParams, initialBooks }) {
         {console.log("books", books)}
         <h1>Search Books</h1>
         <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Enter book title or author"
-          />
-          <button type="submit">Search</button>
+          <div className={styles.input}>
+            <Input
+              variant="filled"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Enter book title or author"
+            />
+            <Button colorScheme="yellow" type="submit">
+              Search Books
+            </Button>
+          </div>
         </form>
-        {isLoading && <p>Loading books...</p>}
         {books?.length > 0 && (
           <div className={styles[`book-list`]}>
             {books.map((book) => (
@@ -86,7 +89,15 @@ function BookListing({ searchParams, initialBooks }) {
           </div>
         )}
         <div ref={loadingRef} /> {/* Reference for IntersectionObserver */}
-        {isLoading && <div>Loading...</div>} {/* Spinner */}
+        {isLoading && (
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+          />
+        )}
       </div>
     </>
   );
