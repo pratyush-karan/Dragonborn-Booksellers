@@ -10,7 +10,6 @@ import {
   Button,
 } from "@chakra-ui/react";
 import styles from "./BookViewModal.module.scss";
-// import { FaCartPlus } from "react-icons/fa6";
 
 import React from "react";
 
@@ -21,6 +20,7 @@ export default function BasicUsage({
   image,
   description,
   otherDetails,
+  handleAddtoCart,
 }) {
   const format = (arr) => {
     if (!arr) return "";
@@ -84,8 +84,11 @@ export default function BasicUsage({
           </ModalBody>
 
           <ModalFooter>
-            <Button variant="ghost">
-              {/* <FaCartPlus /> */}
+            <Button
+              variant="ghost"
+              onClick={handleAddtoCart}
+              isDisabled={!otherDetails.saleability}
+            >
               <span>Add To Cart</span>
             </Button>
           </ModalFooter>

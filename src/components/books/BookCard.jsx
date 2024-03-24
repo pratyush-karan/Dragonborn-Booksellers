@@ -120,6 +120,7 @@ function BookListingCard({ book }) {
       <BookViewModal
         isOpen={isOpen}
         onClose={closeModal}
+        handleAddtoCart={handleAddtoCart}
         title={book.volumeInfo.title}
         description={book.volumeInfo.description}
         image={book.volumeInfo.imageLinks?.thumbnail}
