@@ -16,8 +16,10 @@ function BookListing({ initialBooks, getBooksAction }) {
   const [query, setQuery] = useState(getInitialQuery);
   const [books, setBooks] = useState(initialBooks);
   const [ref, inView] = useInView();
+  const [error, setError] = useState(null);
 
   const handleSubmit = (e) => {
+    setError(null);
     if (query.trim()) {
       e.preventDefault();
       router.push(`/books?query=${query}`);
@@ -26,7 +28,11 @@ function BookListing({ initialBooks, getBooksAction }) {
   };
 
   useEffect(() => {
-    setBooks(initialBooks);
+    if (initialBooks) {
+      setBooks(initialBooks);
+    } else {
+      setError("Can't find books");
+    }
   }, [initialBooks]);
 
   const handleNextPage = async () => {
@@ -70,22 +76,28 @@ function BookListing({ initialBooks, getBooksAction }) {
             Search Books
           </Button>
         </Stack>
-        {books?.length > 0 && (
-          <div className={styles[`book-list`]}>
-            {books.map((book) => (
-              <BookCard book={book} key={book.id} />
-            ))}
-          </div>
-        )}
+        {error ? (
+          <p>{error}</p>
+        ) : (
+          <>
+            {books?.length > 0 && (
+              <div className={styles[`book-list`]}>
+                {books.map((book) => (
+                  <BookCard book={book} key={book.id} />
+                ))}
+              </div>
+            )}
 
-        <Spinner
-          ref={ref}
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="blue.500"
-          size="xl"
-        />
+            <Spinner
+              ref={ref}
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+            />
+          </>
+        )}
       </div>
     </>
   );
