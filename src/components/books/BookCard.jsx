@@ -2,6 +2,12 @@
 import React, { useState } from "react";
 import styles from "./BookCard.module.scss";
 import BookViewModal from "../modals/BookViewModal";
+import {
+  addItemToCart,
+  removeItemFromCart,
+  removeItemsFromCart,
+} from "@/redux/features/cart-slice";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   Card,
@@ -20,7 +26,8 @@ import { ViewIcon } from "@chakra-ui/icons";
 
 function BookListingCard({ book }) {
   const [isOpen, setIsOpen] = useState();
-
+  const dispatch = useDispatch();
+  const bookList = useSelector((state) => state.cartReducer);
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -46,8 +53,21 @@ function BookListingCard({ book }) {
     });
   }
 
+  const handleAddtoCart = () => {
+    dispatch(
+      addItemToCart({
+        id: book.id,
+        image: book.volumeInfo.imageLinks?.thumbnail,
+        title: book.volumeInfo.title,
+        authors: format(book.volumeInfo.authors),
+        price: book.saleInfo.retailPrice,
+      })
+    );
+  };
+
   return (
     <>
+      {console.log(bookList)}
       <Card maxW="sm" className={styles[`card`]}>
         <CardBody className={styles[`card-body`]}>
           <Image
@@ -86,7 +106,12 @@ function BookListingCard({ book }) {
             >
               View Book
             </Button>
-            <Button variant="ghost" colorScheme="blue">
+            <Button
+              variant="ghost"
+              colorScheme="blue"
+              onClick={() => handleAddtoCart()}
+              isDisabled={!saleability}
+            >
               Add to cart
             </Button>
           </ButtonGroup>
@@ -99,6 +124,7 @@ function BookListingCard({ book }) {
         description={book.volumeInfo.description}
         image={book.volumeInfo.imageLinks?.thumbnail}
         otherDetails={{
+          id: book.id,
           genre: book.volumeInfo.categories,
           isbn: book.volumeInfo.industryIdentifiers?.[0].identifier,
           saleability: saleability,

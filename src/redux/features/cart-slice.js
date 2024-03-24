@@ -10,10 +10,23 @@ export const cart = createSlice({
   reducers: {
     addItemToCart: (state, action) => {
       const newItem = action.payload;
+      const itemIndex = state.itemList.findIndex(
+        (item) => item.id === newItem.id
+      );
+      let updatedItemList;
+
+      if (itemIndex !== -1) {
+        updatedItemList = state.itemList.map((item, index) =>
+          index === itemIndex ? { ...item, qty: item.qty + 1 } : item
+        );
+      } else {
+        newItem.qty = 1;
+        updatedItemList = [...state.itemList, newItem];
+      }
       return {
         ...state,
         totalItems: state.totalItems + 1,
-        itemList: [...state.itemList, newItem],
+        itemList: updatedItemList,
       };
     },
     removeItemFromCart: (state, action) => {
