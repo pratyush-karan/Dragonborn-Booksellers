@@ -1,40 +1,40 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { searchBooks } from "@/services/googleBookServices";
 import styles from "./BookListing.module.scss";
 import BookCard from "./BookCard";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Stack, Spinner, Input, Button } from "@chakra-ui/react";
+import { useInView } from "react-intersection-observer";
 
-function BookListing({ searchParams, initialBooks }) {
+function BookListing({ initialBooks, getBooksAction }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const getInitialQuery = () => {
+    return searchParams.get("query") || "";
+  };
   const page = useRef(0);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(getInitialQuery);
   const [books, setBooks] = useState(initialBooks);
-  const [isLoading, setIsLoading] = useState(false);
+  const [ref, inView] = useInView();
 
   const handleSubmit = (e) => {
     if (query.trim()) {
       e.preventDefault();
       router.push(`/books?query=${query}`);
+      page.current = 0;
     }
   };
 
-  const fetchBooks = async (currentPage) => {
-    const res = await searchBooks(searchParams?.query, currentPage);
-    setIsLoading(false);
-    return res.items;
-  };
-
   useEffect(() => {
-    // Update state when `initialBooks` prop changes
     setBooks(initialBooks);
   }, [initialBooks]);
 
   const handleNextPage = async () => {
-    setIsLoading(true);
     page.current += 10;
-    const newBooks = await fetchBooks(page.current);
+    const newBooks = await getBooksAction(
+      searchParams.get("query") || undefined,
+      page.current
+    );
     setBooks((prev) =>
       Array.from(new Set([...prev, ...newBooks].map((book) => book.id))).map(
         (id) =>
@@ -44,25 +44,11 @@ function BookListing({ searchParams, initialBooks }) {
     );
   };
 
-  const loadingRef = useRef(null); //Intersection Observer
-
   useEffect(() => {
-    let observer;
-    if (loadingRef.current) {
-      observer = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && !isLoading) {
-          handleNextPage();
-        }
-      });
-      observer.observe(loadingRef.current);
+    if (inView) {
+      handleNextPage();
     }
-    return () => {
-      if (observer && loadingRef.current) {
-        observer.unobserve(loadingRef.current);
-      }
-    };
-  }, [loadingRef, isLoading]);
-
+  }, [inView]);
   return (
     <>
       <div className={styles.container}>
@@ -91,16 +77,15 @@ function BookListing({ searchParams, initialBooks }) {
             ))}
           </div>
         )}
-        <div ref={loadingRef} /> {/* Reference for IntersectionObserver */}
-        {isLoading && (
-          <Spinner
-            thickness="4px"
-            speed="0.65s"
-            emptyColor="gray.200"
-            color="blue.500"
-            size="xl"
-          />
-        )}
+
+        <Spinner
+          ref={ref}
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="xl"
+        />
       </div>
     </>
   );

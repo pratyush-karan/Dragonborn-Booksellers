@@ -2,7 +2,7 @@
 const BASE_URL = "https://www.googleapis.com/books/v1/volumes";
 
 export async function searchBooks(
-  query,
+  query = undefined,
   startIndex = 0,
   orderBy = "relevance"
 ) {
