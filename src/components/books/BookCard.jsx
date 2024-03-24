@@ -16,12 +16,17 @@ import {
   Image,
   Text,
 } from "@chakra-ui/react";
+import { ViewIcon } from "@chakra-ui/icons";
 
 function BookListingCard({ book }) {
   const [isOpen, setIsOpen] = useState();
 
   const closeModal = () => {
     setIsOpen(false);
+  };
+
+  const openModal = () => {
+    setIsOpen(true);
   };
   const saleability = book.saleInfo.saleability === "FOR_SALE" ? true : false;
 
@@ -73,8 +78,13 @@ function BookListingCard({ book }) {
         <Divider />
         <CardFooter className={styles[`footer`]}>
           <ButtonGroup spacing="2">
-            <Button variant="solid" colorScheme="blue">
-              Buy now
+            <Button
+              variant="solid"
+              colorScheme="blue"
+              leftIcon={<ViewIcon />}
+              onClick={openModal}
+            >
+              View Book
             </Button>
             <Button variant="ghost" colorScheme="blue">
               Add to cart
