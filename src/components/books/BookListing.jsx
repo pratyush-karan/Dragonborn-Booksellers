@@ -1,10 +1,14 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import styles from "./BookListing.module.scss";
 import BookCard from "./BookCard";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Stack, Spinner, Input, Button } from "@chakra-ui/react";
 import { useInView } from "react-intersection-observer";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Stack from "@mui/material/Stack";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function BookListing({ initialBooks, getBooksAction }) {
   const router = useRouter();
@@ -57,48 +61,65 @@ function BookListing({ initialBooks, getBooksAction }) {
   }, [inView]);
   return (
     <>
-      <div className={styles.container}>
+      <Container maxWidth="xl">
         {console.log("books", books)}
-        <Stack spacing={5} direction="row" align="center" margin={10}>
-          <Input
-            variant="filled"
-            size="md"
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "2rem",
+            "@media (max-width: 600px)": {
+              flexDirection: "column",
+            },
+            margin: "2rem",
+          }}
+        >
+          <TextField
+            id="outlined-basic"
+            label="Search books by name,author or title"
+            variant="outlined"
+            color="red"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Enter book title or author"
+            size="small"
+            sx={{
+              width: "30rem",
+              "@media (max-width: 1200px)": {
+                width: "20rem",
+              },
+            }}
           />
-          <Button
-            colorScheme="yellow"
-            onClick={handleSubmit}
-            paddingInline={10}
-            size="md"
-          >
+
+          <Button variant="contained" color="secondary" onClick={handleSubmit}>
             Search Books
           </Button>
-        </Stack>
+        </Box>
         {error ? (
           <p>{error}</p>
         ) : (
           <>
             {books?.length > 0 && (
-              <div className={styles[`book-list`]}>
+              <Stack
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  flexWrap: "wrap",
+                  flexDirection: "row",
+                  textAlign: "center",
+                }}
+              >
                 {books.map((book) => (
                   <BookCard book={book} key={book.id} />
                 ))}
-              </div>
+              </Stack>
             )}
-
-            <Spinner
-              ref={ref}
-              thickness="4px"
-              speed="0.65s"
-              emptyColor="gray.200"
-              color="blue.500"
-              size="xl"
-            />
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <CircularProgress ref={ref} color="blueGrey" />
+            </Box>
           </>
         )}
-      </div>
+      </Container>
     </>
   );
 }
