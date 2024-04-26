@@ -1,76 +1,68 @@
 "use client";
 
-import {
-  Box,
-  Flex,
-  Avatar,
-  HStack,
-  Text,
-  IconButton,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
-  useColorModeValue,
-  useDisclosure,
-  Stack,
-} from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import React, { useState } from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
 import { useRouter } from "next/navigation";
 import { signIn, signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 
-const Links = ["Home", "Books", "My Library", "Profile"];
+const pages = ["Home", "Books", "My Library", "Profile"];
+const settings = ["Your Orders", "Wish List", "Logout"];
 
-const NavLink = (props) => {
-  const { children } = props;
-
+const NavBar = (props) => {
   const router = useRouter();
-  const routing = (key) => {
-    let route = "";
-    switch (key) {
-      case "Home":
-        route = "/";
-        break;
-      case "Books":
-        route = "/books";
-        break;
-      case "My Library":
-        route = "/mylibrary";
-        break;
-      case "Profile":
-        route = "/profile";
-        break;
-      case "Cart":
-        route = "/cart";
-        break;
-    }
-    router.push(route);
+  const { data: session } = useSession();
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
   };
 
-  return (
-    <Box
-      as="a"
-      px={2}
-      py={1}
-      rounded={"md"}
-      _hover={{
-        textDecoration: "none",
-        bg: useColorModeValue("gray.200", "gray.700"),
-        cursor: "pointer",
-      }}
-      onClick={() => routing(children)}
-    >
-      {children}
-    </Box>
-  );
-};
+  const handleCloseNavMenu = (e) => {
+    setAnchorElNav(null);
 
-export default function NavBar(props) {
-  const { data: session } = useSession();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const router = useRouter();
+    if (e.target.textContent) {
+      let route = "";
+      switch (e.target.textContent) {
+        case "Home":
+          route = "/";
+          break;
+        case "Books":
+          route = "/books";
+          break;
+        case "My Library":
+          route = "/mylibrary";
+          break;
+        case "Profile":
+          route = "/profile";
+          break;
+        case "Cart":
+          route = "/cart";
+          break;
+      }
+      router.push(route);
+    }
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
   const handleLogout = () => {
     signOut();
   };
@@ -79,89 +71,180 @@ export default function NavBar(props) {
     signIn();
   };
 
+  const handleMenuItem = (setting) => {
+    handleCloseUserMenu();
+    switch (setting) {
+      case "Your Orders":
+        router.push("/orders");
+        break;
+      case "Wish List":
+        router.push("/wishlist");
+        break;
+      case "Logout":
+        handleLogout();
+        break;
+    }
+  };
+
   return (
     <>
-      {/* {console.log(session)} */}
-      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
-        <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
-          <IconButton
-            size={"md"}
-            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-            aria-label={"Open Menu"}
-            display={{ md: "none" }}
-            onClick={isOpen ? onClose : onOpen}
-          />
-          <HStack spacing={8} alignItems={"center"}>
-            <Box>Logo</Box>
-            <HStack
-              as={"nav"}
-              spacing={4}
-              display={{ base: "none", md: "flex" }}
+      {console.log(session)}
+      <AppBar position="static" sx={{ bgcolor: `primary.dark` }}>
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
             >
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
-            </HStack>
-          </HStack>
-          <Flex alignItems={"center"}>
-            <Box p="2">
-              <NavLink>Cart</NavLink>
+              <Image src="/icon.png" alt="dragon" width={50} height={50} />
+            </Typography>
+
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "flex", md: "none" },
+                color: (theme) => theme.palette.white.main,
+              }}
+            >
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: "block", md: "none" },
+                }}
+              >
+                {pages.map((page) => (
+                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{page}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
             </Box>
-            <Box p="2">
+
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+                mr: 2,
+                display: { xs: "flex", md: "none" },
+                flexGrow: 1,
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              <Image src="/icon.png" alt="dragon" width={50} height={50} />
+            </Typography>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "none", md: "flex" },
+              }}
+            >
+              {pages.map((page) => (
+                <Button
+                  key={page}
+                  onClick={handleCloseNavMenu}
+                  sx={{
+                    my: 2,
+                    display: "block",
+                    color: (theme) => theme.palette.white.main,
+                  }}
+                >
+                  {page}
+                </Button>
+              ))}
+            </Box>
+
+            <Box sx={{ flexGrow: 0 }}>
               {session ? (
-                <Menu>
-                  <MenuButton
-                    as={Button}
-                    rounded={"full"}
-                    variant={"link"}
-                    cursor={"pointer"}
-                    minW={0}
+                <>
+                  <Tooltip title="Open options">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar alt="Remy Sharp" src={session.user.image} />
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    sx={{ mt: "45px" }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
                   >
-                    <Avatar size={"sm"} src={`${session.user.image}`} />
-                  </MenuButton>
-                  <MenuList>
-                    <MenuItem onClick={() => router.push("/orders")}>
-                      Your Orders
-                    </MenuItem>
-                    <MenuItem onClick={() => router.push("/wishlist")}>
-                      Your WishList
-                    </MenuItem>
-                    <MenuDivider />
-                    <MenuItem onClick={handleLogout}>LogOut</MenuItem>
-                  </MenuList>
-                </Menu>
+                    {settings.map((setting, index) => (
+                      <MenuItem
+                        key={setting}
+                        onClick={() => handleMenuItem(setting)}
+                        sx={
+                          index === settings.length - 1
+                            ? { borderTop: 1, borderColor: "tertiary.light" }
+                            : {}
+                        }
+                      >
+                        <Typography textAlign="center">{setting}</Typography>
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </>
               ) : (
                 <>
-                  <Button
-                    as={"a"}
-                    fontSize={"sm"}
-                    fontWeight={400}
-                    variant={"link"}
-                    href={"#"}
-                    onClick={handleSignIn}
-                  >
-                    Sign In
+                  <Button color="white" onClick={handleSignIn}>
+                    Login
                   </Button>
                 </>
               )}
             </Box>
-          </Flex>
-        </Flex>
+          </Toolbar>
+        </Container>
+      </AppBar>
 
-        {isOpen ? (
-          <Box pb={4} display={{ md: "none" }}>
-            <Stack as={"nav"} spacing={4}>
-              {Links.map((link) => (
-                <NavLink key={link} onClick={() => routing(link)}>
-                  {link}
-                </NavLink>
-              ))}
-            </Stack>
-          </Box>
-        ) : null}
-      </Box>
-
-      <Box p={4}> {props.children}</Box>
+      {props.children}
     </>
   );
-}
+};
+export default NavBar;

@@ -1,8 +1,10 @@
 import NavBar from "@/components/NavBar";
 import "./globals.css";
-import Providers from "./providers";
-import SessionProvider from "./sessionProvider";
+import ReduxProviders from "./providers/reduxProvider";
+import SessionProvider from "./providers/sessionProvider";
+import MaterialUIThemeProvider from "./providers/materialUIThemeProvider";
 import { getServerSession } from "next-auth";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 
 export const metadata = {
   title: "Dragonborn Booksellers",
@@ -30,9 +32,13 @@ export default async function RootLayout({ children }) {
       </head>
       <body>
         <SessionProvider session={session}>
-          <Providers>
-            <NavBar>{children}</NavBar>
-          </Providers>
+          <AppRouterCacheProvider>
+            <ReduxProviders>
+              <MaterialUIThemeProvider>
+                <NavBar>{children}</NavBar>
+              </MaterialUIThemeProvider>
+            </ReduxProviders>
+          </AppRouterCacheProvider>
         </SessionProvider>
       </body>
     </html>
