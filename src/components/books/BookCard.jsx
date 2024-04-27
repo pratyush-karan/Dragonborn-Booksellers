@@ -10,19 +10,18 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Stack,
-  Heading,
-  Divider,
-  ButtonGroup,
   Button,
-  Image,
-  Text,
-} from "@chakra-ui/react";
-import { ViewIcon } from "@chakra-ui/icons";
+  CardActions,
+  Stack,
+  Typography,
+  Card,
+  CardContent,
+  CardMedia,
+  Divider,
+  Box,
+} from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 function BookListingCard({ book }) {
   const [isOpen, setIsOpen] = useState();
@@ -68,55 +67,121 @@ function BookListingCard({ book }) {
   return (
     <>
       {console.log(bookList)}
-      <Card maxW="sm" className={styles[`card`]}>
-        <CardBody className={styles[`card-body`]}>
-          <Image
-            src={book.volumeInfo.imageLinks?.thumbnail}
-            alt={book.volumeInfo.title}
-            borderRadius="lg"
-            height={150}
-          />
-          <Stack mt="6" spacing="3">
-            <Heading size="md">{book.volumeInfo.title}</Heading>
-            <Text>{format(book.volumeInfo.authors)}</Text>
-            <Text color="blue.600" fontSize="2xl" className={styles[`price`]}>
-              {saleability ? (
-                <>
-                  <span>
-                    {formatter.format(book.saleInfo.retailPrice.amount)}
-                  </span>
-                  <span className={styles[`strike-through`]}>
-                    {formatter.format(book.saleInfo.listPrice.amount)}
-                  </span>
-                </>
-              ) : (
-                <>Not For Sale!</>
-              )}
-            </Text>
-          </Stack>
-        </CardBody>
-        <Divider />
-        <CardFooter className={styles[`footer`]}>
-          <ButtonGroup spacing="2">
-            <Button
-              variant="solid"
-              colorScheme="blue"
-              leftIcon={<ViewIcon />}
-              onClick={openModal}
-            >
-              View Book
-            </Button>
-            <Button
-              variant="ghost"
-              colorScheme="blue"
-              onClick={() => handleAddtoCart()}
-              isDisabled={!saleability}
-            >
-              Add to cart
-            </Button>
-          </ButtonGroup>
-        </CardFooter>
+      <Card
+        sx={{
+          minWidth: "300px",
+          width: "20%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          alignItems: "center",
+          boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.15)",
+          border: "1px solid #e0e0e0",
+          borderRadius: "4px",
+          boxSizing: "border-box",
+        }}
+      >
+        <CardMedia
+          component="img"
+          height="140"
+          sx={{
+            marginTop: "0.5rem",
+            width: "fit-content",
+          }}
+          image={book.volumeInfo.imageLinks?.thumbnail}
+          alt={book.volumeInfo.title}
+        />
+        <CardContent
+          sx={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}
+        >
+          <Typography variant="h6" component="h6" fontWeight="bold">
+            {book.volumeInfo.title}
+          </Typography>
+          <Typography variant="subtitle1">
+            {format(book.volumeInfo.authors)}
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              gap: "0.5rem",
+              alignItems: "center",
+            }}
+          >
+            {saleability ? (
+              <>
+                <Typography
+                  sx={{
+                    fontWeight: "bold",
+                  }}
+                >
+                  {formatter.format(book.saleInfo.retailPrice.amount)}
+                </Typography>
+                <Typography sx={{ textDecoration: "line-through" }}>
+                  {formatter.format(book.saleInfo.listPrice.amount)}
+                </Typography>
+              </>
+            ) : (
+              <Typography
+                sx={{
+                  fontWeight: "bold",
+                }}
+              >
+                Not For Sale!
+              </Typography>
+            )}
+          </Box>
+        </CardContent>
+
+        <Divider
+          sx={{
+            width: "100%",
+          }}
+        />
+        <CardActions
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            gap: ".5rem",
+            margin: "0.5rem 0px",
+          }}
+        >
+          <Button
+            size="small"
+            onClick={openModal}
+            variant="contained"
+            color="blueGrey"
+            sx={{
+              color: (theme) => theme.palette.white.main,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "0.25rem",
+            }}
+          >
+            <VisibilityIcon fontSize="small" />
+            <span>View Book</span>
+          </Button>
+          <Button
+            size="small"
+            onClick={() => handleAddtoCart()}
+            disabled={!saleability}
+            variant="contained"
+            sx={{
+              bgcolor: (theme) => theme.palette.secondary.light,
+              ":hover": {
+                bgcolor: (theme) => theme.palette.secondary.dark,
+              },
+            }}
+          >
+            <ShoppingCartIcon fontSize="small" />
+            <span>Add to cart</span>
+          </Button>
+        </CardActions>
       </Card>
+
       <BookViewModal
         isOpen={isOpen}
         onClose={closeModal}

@@ -61,7 +61,12 @@ function BookListing({ initialBooks, getBooksAction }) {
   }, [inView]);
   return (
     <>
-      <Container maxWidth="xl">
+      <Box
+        sx={{
+          width: "100vw",
+          margin: "0px",
+        }}
+      >
         {console.log("books", books)}
         <Box
           sx={{
@@ -107,6 +112,7 @@ function BookListing({ initialBooks, getBooksAction }) {
                   flexWrap: "wrap",
                   flexDirection: "row",
                   textAlign: "center",
+                  gap: "1rem",
                 }}
               >
                 {books.map((book) => (
@@ -114,12 +120,18 @@ function BookListing({ initialBooks, getBooksAction }) {
                 ))}
               </Stack>
             )}
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "1rem",
+              }}
+            >
               <CircularProgress ref={ref} color="blueGrey" />
             </Box>
           </>
         )}
-      </Container>
+      </Box>
     </>
   );
 }

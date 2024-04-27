@@ -9,7 +9,13 @@ import {
   amber,
   blueGrey,
 } from "@mui/material/colors";
-// import { Roboto } from "next/font/google";
+import { Raleway } from "next/font/google";
+
+const raleway = Raleway({
+  weight: ["300", "400", "500", "700"],
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export default function ({ children }) {
   const theme = createTheme({
@@ -22,7 +28,7 @@ export default function ({ children }) {
         main: amber[500],
       },
       tertiary: {
-        main: grey[600],
+        main: grey[500],
       },
       blueGrey: {
         main: blueGrey[500],
@@ -30,6 +36,9 @@ export default function ({ children }) {
       red: {
         main: red[500],
       },
+    },
+    typography: {
+      fontFamily: raleway.style.fontFamily,
     },
   });
 
