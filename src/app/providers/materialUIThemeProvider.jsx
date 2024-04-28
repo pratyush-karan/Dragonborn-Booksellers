@@ -8,6 +8,8 @@ import {
   red,
   amber,
   blueGrey,
+  green,
+  teal,
 } from "@mui/material/colors";
 import { Raleway } from "next/font/google";
 
@@ -30,11 +32,17 @@ export default function ({ children }) {
       tertiary: {
         main: grey[500],
       },
+      tertiaryLight: {
+        main: grey[200],
+      },
       blueGrey: {
         main: blueGrey[500],
       },
       red: {
         main: red[500],
+      },
+      green: {
+        main: green[500],
       },
     },
     typography: {

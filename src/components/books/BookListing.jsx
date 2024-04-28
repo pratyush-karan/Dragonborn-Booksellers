@@ -112,7 +112,7 @@ function BookListing({ initialBooks, getBooksAction }) {
                   flexWrap: "wrap",
                   flexDirection: "row",
                   textAlign: "center",
-                  gap: "1rem",
+                  gap: "2rem",
                 }}
               >
                 {books.map((book) => (

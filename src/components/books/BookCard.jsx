@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import styles from "./BookCard.module.scss";
 import BookViewModal from "../modals/BookViewModal";
 import {
   addItemToCart,
@@ -24,16 +23,11 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 function BookListingCard({ book }) {
-  const [isOpen, setIsOpen] = useState();
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const bookList = useSelector((state) => state.cartReducer);
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-
-  const openModal = () => {
-    setIsOpen(true);
-  };
+  const handleOpenModal = () => setOpen(true);
+  const handleCloseModal = () => setOpen(false);
   const saleability = book.saleInfo.saleability === "FOR_SALE" ? true : false;
 
   const format = (arr) => {
@@ -150,7 +144,7 @@ function BookListingCard({ book }) {
         >
           <Button
             size="small"
-            onClick={openModal}
+            onClick={handleOpenModal}
             variant="contained"
             color="blueGrey"
             sx={{
@@ -183,8 +177,8 @@ function BookListingCard({ book }) {
       </Card>
 
       <BookViewModal
-        isOpen={isOpen}
-        onClose={closeModal}
+        open={open}
+        handleCloseModal={handleCloseModal}
         handleAddtoCart={handleAddtoCart}
         title={book.volumeInfo.title}
         description={book.volumeInfo.description}
