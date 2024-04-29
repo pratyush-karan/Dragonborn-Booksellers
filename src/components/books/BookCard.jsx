@@ -60,7 +60,7 @@ function BookListingCard({ book }) {
 
   return (
     <>
-      {console.log(bookList)}
+      {/* {console.log(bookList)} */}
       <Card
         sx={{
           minWidth: "300px",

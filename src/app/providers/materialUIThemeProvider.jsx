@@ -26,6 +26,7 @@ export default function ({ children }) {
       primary: {
         main: lightBlue[500],
       },
+
       secondary: {
         main: amber[500],
       },
