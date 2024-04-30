@@ -4,12 +4,13 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   lightBlue,
   grey,
-  yellow,
+  blue,
   red,
   amber,
   blueGrey,
   green,
-  teal,
+  indigo,
+  cyan,
 } from "@mui/material/colors";
 import { Raleway } from "next/font/google";
 
@@ -44,6 +45,9 @@ export default function ({ children }) {
       },
       green: {
         main: green[500],
+      },
+      primaryDark: {
+        main: lightBlue[700],
       },
     },
     typography: {
