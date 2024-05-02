@@ -21,7 +21,7 @@ import {
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-
+import { format } from "@/components/ui-library/helpers";
 const BookListingCard = forwardRef(({ book }, ref) => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
@@ -29,14 +29,6 @@ const BookListingCard = forwardRef(({ book }, ref) => {
   const handleOpenModal = () => setOpen(true);
   const handleCloseModal = () => setOpen(false);
   const saleability = book.saleInfo.saleability === "FOR_SALE" ? true : false;
-
-  const format = (arr) => {
-    if (!arr) return "";
-    if (arr.length === 1) return arr[0];
-    else {
-      return arr.join(",");
-    }
-  };
 
   let formatter;
   if (saleability) {

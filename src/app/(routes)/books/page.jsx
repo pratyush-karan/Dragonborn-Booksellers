@@ -11,8 +11,7 @@ export default async function BookListingPage({ searchParams }) {
       category: category,
       orderBy: orderBy,
     });
-    //res.totalItems -> gives total items
-    console.log("result", res);
+
     if (res.items) return res.items;
     else return [];
   };

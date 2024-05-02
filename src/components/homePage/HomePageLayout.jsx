@@ -1,11 +1,12 @@
 "use client";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Divider } from "@mui/material";
 import React, { useState } from "react";
 import IntroCarousel from "./IntroCarousel";
 import SearchBar from "../ui-library/SearchBar";
 import { useRouter } from "next/navigation";
+import CategoryCarousel from "./categoryCarousel";
 
-function HomePageLayout() {
+function HomePageLayout({ data }) {
   const [query, setQuery] = useState("");
   const router = useRouter();
 
@@ -16,6 +17,13 @@ function HomePageLayout() {
   const handleSubmit = () => {
     router.push(`/books?query=${query}`);
   };
+
+  const mainCategories = [
+    ["Daily Top 100", "/svg/daily-top-100.svg"],
+    ["New Releases", "/svg/new-releases.svg"],
+    ["BestSellers", "/svg/best-sellers.svg"],
+    ["Top Authors", "/svg/top-authors.svg"],
+  ];
   return (
     <>
       <Box
@@ -34,85 +42,68 @@ function HomePageLayout() {
         <Typography variant="h3" sx={{ margin: "1rem 0rem" }}>
           Dragonborn Booksellers: Fus Ro Dah! Your Next Great Read Awaits
         </Typography>
-        <Box sx={{ display: "flex", justifyContent: "center", gap: "2rem" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "2rem",
+            height: "450px",
+          }}
+        >
           <IntroCarousel />
           <Box
             sx={{
               display: "flex",
               justifyContent: "space-around",
+              alignItems: "center",
               gap: "1rem",
             }}
           >
-            <Box
-              sx={{
-                backgroundImage: "url(/svg/daily-top-100.svg)",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                width: "250px",
-                height: "150px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                fontSize: "40px",
-                border: "1px solid black",
-                borderRadius: "5px",
-              }}
-            >
-              Daily Top 100
-            </Box>
-            <Box
-              sx={{
-                backgroundImage: "url(/svg/new-releases.svg)",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                width: "250px",
-                height: "150px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                fontSize: "40px",
-                border: "1px solid black",
-                borderRadius: "5px",
-              }}
-            >
-              New Releases
-            </Box>
-            <Box
-              sx={{
-                backgroundImage: "url(/svg/best-sellers.svg)",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                width: "250px",
-                height: "150px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                fontSize: "40px",
-                border: "1px solid black",
-                borderRadius: "5px",
-              }}
-            >
-              BestSellers
-            </Box>
-            <Box
-              sx={{
-                backgroundImage: "url(/svg/top-authors.svg)",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                width: "250px",
-                height: "150px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                fontSize: "40px",
-                border: "1px solid black",
-                borderRadius: "5px",
-                color: "#fff",
-              }}
-            >
-              Top Authors
-            </Box>
+            {mainCategories.map((category) => (
+              <Box
+                sx={{
+                  backgroundImage: `url(${category[1]})`,
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  width: "250px",
+                  height: "150px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: "40px",
+                  border: "1px solid black",
+                  borderRadius: "5px",
+                  color: category[0] === "Top Authors" ? "#fff" : "#000",
+                  cursor: "pointer",
+                }}
+              >
+                {category[0]}
+              </Box>
+            ))}
           </Box>
+        </Box>
+        <Box sx={{ margin: "1rem 0rem" }}>
+          {mainCategories.map((category, index) => (
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                marginBottom: "2rem",
+              }}
+            >
+              <Typography
+                variant="h5"
+                sx={{ margin: "1rem", fontWeight: "bold" }}
+              >
+                {category[0]}
+              </Typography>
+              <CategoryCarousel books={data[index]} />
+              <Divider
+                sx={{ margin: "1rem", width: "100%", borderBottomWidth: "5px" }}
+              />
+            </Box>
+          ))}
         </Box>
       </Box>
     </>
