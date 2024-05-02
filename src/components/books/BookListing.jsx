@@ -17,6 +17,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
+import SearchBar from "../ui-library/SearchBar";
 
 function BookListing({ initialBooks, getBooksAction }) {
   const router = useRouter();
@@ -177,13 +178,13 @@ function BookListing({ initialBooks, getBooksAction }) {
     }
   }, [inView]);
 
+  const handleInputChange = (e) => {
+    setQuery(e.target.value);
+  };
+
   return (
     <>
-      {/* {console.log(checkBoxStatus)} */}
-      {/* {console.log("books", books)} */}
-      {console.log("hasmorebooks", hasMoreBooks)}
-
-      <Box
+      {/* <Box
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -214,7 +215,12 @@ function BookListing({ initialBooks, getBooksAction }) {
         <Button variant="contained" color="secondary" onClick={handleSubmit}>
           Search Books
         </Button>
-      </Box>
+      </Box> */}
+      <SearchBar
+        handleSubmit={handleSubmit}
+        onInputChange={handleInputChange}
+        query={query}
+      />
 
       <Grid container spacing={2}>
         <Grid

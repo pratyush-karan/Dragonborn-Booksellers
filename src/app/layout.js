@@ -1,4 +1,4 @@
-import NavBar from "@/components/NavBar";
+import NavBar from "@/components/ui-library/NavBar";
 import "./globals.css";
 import ReduxProviders from "./providers/reduxProvider";
 import SessionProvider from "./providers/sessionProvider";

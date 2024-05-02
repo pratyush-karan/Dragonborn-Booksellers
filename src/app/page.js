@@ -1,11 +1,8 @@
-// import HomePageLayout from "@/components/homePage/homePageLayout";
+import HomePageLayout from "@/components/homePage/HomePageLayout";
 import React from "react";
 
-export default function Home() {
-  return (
-    <>
-      <div>Home Page</div>
-      {/* <HomePageLayout /> */}
-    </>
-  );
+function HomePage() {
+  return <HomePageLayout />;
 }
+
+export default HomePage;

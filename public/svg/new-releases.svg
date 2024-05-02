@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="250" height="150" preserveAspectRatio="none" viewBox="0 0 250 150">
+    <g mask="url(&quot;#SvgjsMask1011&quot;)" fill="none">
+        <rect width="250" height="150" x="0" y="0" fill="rgba(44, 169, 158, 1)"></rect>
+        <path d="M27.34 47.48 a10.28 10.28 0 1 0 20.56 0 a10.28 10.28 0 1 0 -20.56 0z" stroke="#e73635"></path>
+        <path d="M92.01 130.35L96.78 130.35L96.78 135.12L92.01 135.12z" stroke="#e73635"></path>
+        <path d="M245.56 71.01 a1.25 1.25 0 1 0 2.5 0 a1.25 1.25 0 1 0 -2.5 0z" stroke="#e73635"></path>
+        <path d="M181.06 54.2a6.93 6.93 0 1 0-3.38-13.44z" fill="#d3b714"></path>
+        <path d="M205.55 37.88a7.05 7.05 0 1 0 7.2 12.12z" stroke="#037b0b"></path>
+        <path d="M150.2 22.69L152.12 22.69L152.12 27.09L150.2 27.09z" fill="#d3b714"></path>
+        <path d="M235.24 79.8a1.64 1.64 0 1 0 3.2 0.76z" fill="#037b0b"></path>
+        <path d="M176.92 57.99L186.15 57.99L186.15 60.93L176.92 60.93z" stroke="#e73635"></path>
+        <path d="M231.11 145.57L231.28 145.57L231.28 149.95L231.11 149.95z" stroke="#e73635"></path>
+        <path d="M223.77 16.78L234.98 16.78L234.98 27.99L223.77 27.99z" fill="#e73635"></path>
+        <path d="M202.64 48.63a10.66 10.66 0 1 0 10.26 18.69z" fill="#e73635"></path>
+        <path d="M54.6 41.76L68.54 41.76L68.54 55.42L54.6 55.42z" stroke="#d3b714"></path>
+        <path d="M144.73 51.4 a6.44 6.44 0 1 0 12.88 0 a6.44 6.44 0 1 0 -12.88 0z" fill="#d3b714"></path>
+        <path d="M18.02 142.16a2.98 2.98 0 1 0-1.72-5.71z" fill="#037b0b"></path>
+        <path d="M13.43 87.65L27.95 87.65L27.95 94.25L13.43 94.25z" stroke="#037b0b"></path>
+        <path d="M235.69 121.23L241.86 121.23L241.86 127.4L235.69 127.4z" fill="#037b0b"></path>
+        <path d="M184.47 84.44L198.36 84.44L198.36 94.1L184.47 94.1z" stroke="#d3b714"></path>
+        <path d="M151.41 106.14L166.03 106.14L166.03 120.76L151.41 120.76z" stroke="#d3b714"></path>
+        <path d="M29.68 69.38 a2.82 2.82 0 1 0 5.64 0 a2.82 2.82 0 1 0 -5.64 0z" stroke="#037b0b"></path>
+        <path d="M63.22 119.63 a4.24 4.24 0 1 0 8.48 0 a4.24 4.24 0 1 0 -8.48 0z" stroke="#e73635"></path>
+        <path d="M187.26 76.92L193.08 76.92L193.08 83.89L187.26 83.89z" fill="#d3b714"></path>
+    </g>
+    <defs>
+        <mask id="SvgjsMask1011">
+            <rect width="250" height="150" fill="#ffffff"></rect>
+        </mask>
+    </defs>
+</svg>
