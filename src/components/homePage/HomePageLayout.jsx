@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import IntroCarousel from "./IntroCarousel";
 import SearchBar from "../ui-library/SearchBar";
 import { useRouter } from "next/navigation";
-import CategoryCarousel from "./categoryCarousel";
+import CategoryCarousel from "./CategoryCarousel";
 
 function HomePageLayout({ data }) {
   const [query, setQuery] = useState("");

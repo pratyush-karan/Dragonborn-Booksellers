@@ -25,13 +25,19 @@ export default function CarouselCard({ book }) {
         borderRadius: "5px",
       }}
     >
-      <Box sx={{ display: "flex" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "nowrap",
+          justifyContent: "space-around",
+        }}
+      >
         <CardMedia
           component="img"
           height="140"
           sx={{
-            marginTop: "0.5rem",
             width: "fit-content",
+            padding: "0.5rem",
             transition: "transform 0.2s ease",
             cursor: "pointer",
             ":hover": {
@@ -42,7 +48,16 @@ export default function CarouselCard({ book }) {
           alt={book.volumeInfo.title}
           image={book.volumeInfo.imageLinks?.thumbnail}
         />
-        <CardContent>
+        <CardContent
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-around",
+            flexWrap: "nowrap",
+            padding: "0px",
+            marginTop: "0.5rem",
+          }}
+        >
           <Typography gutterBottom variant="h5" component="div">
             {book.volumeInfo.title}
           </Typography>
@@ -52,10 +67,10 @@ export default function CarouselCard({ book }) {
         </CardContent>
       </Box>
 
-      <CardActions>
+      <Box>
         <Button size="small">View Book</Button>
         <Button size="small">Add To Cart</Button>
-      </CardActions>
+      </Box>
     </Card>
   );
 }
