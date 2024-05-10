@@ -16,7 +16,7 @@ export default function CarouselCard({ book }) {
   return (
     <Card
       sx={{
-        minWidth: "400px",
+        minWidth: "300px",
         height: "200px",
         display: "flex",
         flexDirection: "column",

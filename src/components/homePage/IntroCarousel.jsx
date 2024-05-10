@@ -58,7 +58,17 @@ function IntroCarousel() {
   }, [activeStep]);
 
   return (
-    <Box sx={{ maxWidth: 480, flexGrow: 1 }}>
+    <Box
+      sx={{
+        maxWidth: "480px",
+        flexGrow: 1,
+        maxHeight: "450px",
+        transition: "transform 0.3s ease",
+        "@media (max-width: 480px)": {
+          transform: "scale(0.8)",
+        },
+      }}
+    >
       <SwipeableViews
         index={activeStep}
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}

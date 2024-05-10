@@ -20,7 +20,7 @@ import Image from "next/image";
 const pages = ["Home", "Books", "My Library", "Profile"];
 const settings = ["Your Orders", "Wish List", "Logout"];
 
-const NavBar = (props) => {
+export default function NavBar({ children }) {
   const router = useRouter();
   const { data: session } = useSession();
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -88,33 +88,28 @@ const NavBar = (props) => {
 
   return (
     <>
-      {console.log(session)}
       <AppBar position="static" sx={{ bgcolor: `primary.dark` }}>
-        <Container maxWidth="xl">
+        <Container sx={{ maxWidth: "90% !important" }}>
           <Toolbar disableGutters>
-            <Typography
-              variant="h6"
-              noWrap
-              component="a"
-              href="/"
+            <Box
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
-                fontFamily: "monospace",
-                fontWeight: 700,
-                letterSpacing: ".3rem",
-                color: "inherit",
-                textDecoration: "none",
               }}
             >
-              <Image src="/icon.png" alt="dragon" width={50} height={50} />
-            </Typography>
+              <Image
+                src="/icon.png"
+                alt="dragon"
+                width={50}
+                height={50}
+                onClick={() => router.push("/")}
+              />
+            </Box>
 
             <Box
               sx={{
                 flexGrow: 1,
                 display: { xs: "flex", md: "none" },
-                color: (theme) => theme.palette.white.main,
               }}
             >
               <IconButton
@@ -123,7 +118,7 @@ const NavBar = (props) => {
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleOpenNavMenu}
-                color="inherit"
+                color="white"
               >
                 <MenuIcon />
               </IconButton>
@@ -153,24 +148,21 @@ const NavBar = (props) => {
               </Menu>
             </Box>
 
-            <Typography
-              variant="h5"
-              noWrap
-              component="a"
-              href="/"
+            <Box
               sx={{
                 mr: 2,
                 display: { xs: "flex", md: "none" },
                 flexGrow: 1,
-                fontFamily: "monospace",
-                fontWeight: 700,
-                letterSpacing: ".3rem",
-                color: "inherit",
-                textDecoration: "none",
               }}
             >
-              <Image src="/icon.png" alt="dragon" width={50} height={50} />
-            </Typography>
+              <Image
+                src="/icon.png"
+                alt="dragon"
+                width={50}
+                height={50}
+                onClick={() => router.push("/")}
+              />
+            </Box>
             <Box
               sx={{
                 flexGrow: 1,
@@ -243,8 +235,7 @@ const NavBar = (props) => {
         </Container>
       </AppBar>
 
-      {props.children}
+      {children}
     </>
   );
-};
-export default NavBar;
+}

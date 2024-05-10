@@ -30,6 +30,7 @@ function HomePageLayout({ data }) {
         sx={{
           display: "flex",
           flexDirection: "column",
+          justifyContent: "space-around",
           width: "80%",
           margin: "auto",
         }}
@@ -45,22 +46,26 @@ function HomePageLayout({ data }) {
         <Box
           sx={{
             display: "flex",
+            flexDirection: "column",
             justifyContent: "center",
             gap: "2rem",
-            height: "450px",
+            alignItems: "center",
           }}
         >
           <IntroCarousel />
+
           <Box
             sx={{
               display: "flex",
               justifyContent: "space-around",
+              flexWrap: "wrap",
               alignItems: "center",
               gap: "1rem",
             }}
           >
             {mainCategories.map((category) => (
               <Box
+                key={category[1]}
                 sx={{
                   backgroundImage: `url(${category[1]})`,
                   backgroundSize: "cover",
@@ -82,9 +87,11 @@ function HomePageLayout({ data }) {
             ))}
           </Box>
         </Box>
+
         <Box sx={{ margin: "1rem 0rem" }}>
           {mainCategories.map((category, index) => (
             <Box
+              key={category[1]}
               sx={{
                 display: "flex",
                 flexDirection: "column",

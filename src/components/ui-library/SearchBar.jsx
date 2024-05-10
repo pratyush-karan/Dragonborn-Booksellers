@@ -10,7 +10,7 @@ function SearchBar({ onInputChange, handleSubmit, query }) {
         justifyContent: "center",
         alignItems: "center",
         gap: "2rem",
-        "@media (max-width: 600px)": {
+        "@media (max-width: 695px)": {
           flexDirection: "column",
         },
         margin: "2rem",

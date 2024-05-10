@@ -13,7 +13,7 @@ export default function CategoryCarousel({ books }) {
   );
   const [currentPage, setCurrentPage] = useState(0);
   const [slideDirection, setSlideDirection] = useState("left");
-  const cardsPerPage = 3;
+  const cardsPerPage = 4;
 
   const handleNextPage = () => {
     setSlideDirection("left");
@@ -40,7 +40,12 @@ export default function CategoryCarousel({ books }) {
         <NavigateBeforeIcon />
       </IconButton>
 
-      <Box sx={{ width: `${cardsPerPage * 250}px`, height: "100%" }}>
+      <Box
+        sx={{
+          width: `${cardsPerPage * 250}px`,
+          height: "100%",
+        }}
+      >
         {cards.map((card, index) => (
           <Box
             key={`card-${index}`}
