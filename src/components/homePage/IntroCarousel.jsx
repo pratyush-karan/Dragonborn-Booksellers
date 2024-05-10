@@ -61,12 +61,10 @@ function IntroCarousel() {
     <Box
       sx={{
         maxWidth: "480px",
-        flexGrow: 1,
-        maxHeight: "450px",
-        transition: "transform 0.3s ease",
-        "@media (max-width: 480px)": {
-          transform: "scale(0.8)",
-        },
+        height: "auto",
+        overflow: "hidden",
+        margin: "auto",
+        height: "420px",
       }}
     >
       <SwipeableViews
@@ -81,11 +79,11 @@ function IntroCarousel() {
               <Box
                 component="img"
                 sx={{
-                  height: 270,
                   display: "block",
-                  maxWidth: 480,
-                  overflow: "hidden",
                   width: "100%",
+                  height: "auto",
+                  transformOrigin: "top left",
+                  transition: "transform 0.3s ease",
                 }}
                 src={step.imgPath}
                 alt={step.label}

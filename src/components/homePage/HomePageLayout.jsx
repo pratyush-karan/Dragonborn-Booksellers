@@ -56,6 +56,7 @@ function HomePageLayout({ data }) {
 
           <Box
             sx={{
+              width: "100%",
               display: "flex",
               justifyContent: "space-around",
               flexWrap: "wrap",
@@ -88,7 +89,7 @@ function HomePageLayout({ data }) {
           </Box>
         </Box>
 
-        <Box sx={{ margin: "1rem 0rem" }}>
+        {/* <Box sx={{ margin: "1rem 0rem" }}>
           {mainCategories.map((category, index) => (
             <Box
               key={category[1]}
@@ -111,7 +112,7 @@ function HomePageLayout({ data }) {
               />
             </Box>
           ))}
-        </Box>
+        </Box> */}
       </Box>
     </>
   );
