@@ -63,7 +63,7 @@ function IntroCarousel() {
         maxWidth: "480px",
         overflow: "hidden",
         margin: "auto",
-        height: "420px",
+        height: "450px",
       }}
     >
       <SwipeableViews
