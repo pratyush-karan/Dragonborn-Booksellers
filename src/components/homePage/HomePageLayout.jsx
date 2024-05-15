@@ -1,14 +1,16 @@
 "use client";
 import { Box, Typography, Divider } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import IntroCarousel from "./IntroCarousel";
 import SearchBar from "../ui-library/SearchBar";
 import { useRouter } from "next/navigation";
 import CategoryCarousel from "./CategoryCarousel";
+import useScreenWidth from "@/hooks/useScreenWidth";
 
 function HomePageLayout({ data }) {
   const [query, setQuery] = useState("");
   const router = useRouter();
+  const screenWidth = useScreenWidth();
 
   const handleInputChage = (e) => {
     setQuery(e.target.value);
@@ -24,14 +26,16 @@ function HomePageLayout({ data }) {
     ["BestSellers", "/svg/best-sellers.svg"],
     ["Top Authors", "/svg/top-authors.svg"],
   ];
+
   return (
     <>
+      {console.log("Screen width:", screenWidth)}
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-around",
-          width: "80%",
+          width: "90%",
           margin: "auto",
         }}
       >
@@ -58,10 +62,10 @@ function HomePageLayout({ data }) {
             sx={{
               width: "100%",
               display: "flex",
-              justifyContent: "space-around",
+              justifyContent: "center",
               flexWrap: "wrap",
               alignItems: "center",
-              gap: "1rem",
+              gap: "2rem",
             }}
           >
             {mainCategories.map((category) => (
@@ -89,7 +93,7 @@ function HomePageLayout({ data }) {
           </Box>
         </Box>
 
-        {/* <Box sx={{ margin: "1rem 0rem" }}>
+        <Box sx={{ margin: "1rem 0rem" }}>
           {mainCategories.map((category, index) => (
             <Box
               key={category[1]}
@@ -102,17 +106,21 @@ function HomePageLayout({ data }) {
             >
               <Typography
                 variant="h5"
-                sx={{ margin: "1rem", fontWeight: "bold" }}
+                sx={{ margin: "1rem 0rem", fontWeight: "bold" }}
               >
                 {category[0]}
               </Typography>
-              <CategoryCarousel books={data[index]} />
+              <CategoryCarousel books={data[index]} screenWidth={screenWidth} />
               <Divider
-                sx={{ margin: "1rem", width: "100%", borderBottomWidth: "5px" }}
+                sx={{
+                  margin: "1rem 0rem",
+                  width: "100%",
+                  borderBottomWidth: "5px",
+                }}
               />
             </Box>
           ))}
-        </Box> */}
+        </Box>
       </Box>
     </>
   );

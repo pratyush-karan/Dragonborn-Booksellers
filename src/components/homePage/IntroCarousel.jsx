@@ -61,7 +61,6 @@ function IntroCarousel() {
     <Box
       sx={{
         maxWidth: "480px",
-        height: "auto",
         overflow: "hidden",
         margin: "auto",
         height: "420px",

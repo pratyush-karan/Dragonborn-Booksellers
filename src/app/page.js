@@ -16,7 +16,7 @@ export default async function HomePage() {
     if (res.items) return res.items;
     else return [];
   };
-  const dailyTop100 = await getCarouselBooks({ category: "love" });
+  const dailyTop100 = await getCarouselBooks({ category: "fantasy" });
   const newReleases = await getCarouselBooks({ query: "new+releases" });
   const bestSellers = await getCarouselBooks({ category: "inspirational" });
   const topAuthors = await getCarouselBooks({ category: "authors" });

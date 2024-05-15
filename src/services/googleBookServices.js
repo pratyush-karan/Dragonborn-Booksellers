@@ -23,7 +23,6 @@ export async function searchBooks({
   }
   url += `&startIndex=${startIndex}&maxResults=${current_max_results}&orderBy=${orderBy}`;
 
-  console.log("url", url);
   const res = await fetch(url, {
     cache: "no-store",
     headers: {

@@ -1,87 +1,90 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
-import { Box, IconButton, Slide, Stack } from "@mui/material";
-import {
-  NavigateBefore as NavigateBeforeIcon,
-  NavigateNext as NavigateNextIcon,
-} from "@mui/icons-material";
+import React, { useCallback, useState } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import { Box, IconButton } from "@mui/material";
 import CarouselCard from "./CarouselCard";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-export default function CategoryCarousel({ books }) {
-  const [cards, setCards] = useState(() =>
-    books.map((book) => <CarouselCard book={book} key={book.id} />)
-  );
-  const [currentPage, setCurrentPage] = useState(0);
-  const [slideDirection, setSlideDirection] = useState("left");
-  const cardsPerPage = 4;
+export default function CategoryCarousel({ books, screenWidth }) {
+  const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
+  const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
 
-  const handleNextPage = () => {
-    setSlideDirection("left");
-    setCurrentPage((prev) => prev + 1);
+  const calculateSlidesToScroll = () => {
+    if (screenWidth >= 1530) return 4;
+    else if (screenWidth >= 1200) return 3;
+    else if (screenWidth >= 900) return 2;
+    else return 1;
   };
 
-  const handlePrevPage = () => {
-    setSlideDirection("right");
-    setCurrentPage((prev) => prev - 1);
+  console.log("calculateSlidesToScroll()", calculateSlidesToScroll());
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    slidesToScroll: calculateSlidesToScroll(),
+    skipSnaps: false,
+    containScroll: "trimSnaps",
+  });
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
+
+  const embla_slide = {
+    flex: "0 0 100%",
+    minWidth: "0px",
   };
 
   return (
     <Box
       sx={{
         display: "flex",
-        flexDirection: "row",
+        flexWrap: "nowrap",
+        justifyContent: "space-around",
         alignItems: "center",
-        alignContent: "center",
-        justifyContent: "space-between",
-        height: "fit-content",
+        gap: "1rem",
       }}
     >
-      <IconButton onClick={handlePrevPage} disabled={currentPage === 0}>
-        <NavigateBeforeIcon />
-      </IconButton>
-
-      <Box
-        sx={{
-          width: `${cardsPerPage * 250}px`,
-          height: "100%",
-        }}
-      >
-        {cards.map((card, index) => (
-          <Box
-            key={`card-${index}`}
-            sx={{
-              width: "100%",
-              height: "100%",
-              display: currentPage === index ? "block" : "none",
-            }}
-          >
-            {/* this is the slide animation that will be used to slide the cards in and out*/}
-            <Slide direction={slideDirection} in={currentPage === index}>
-              <Stack
-                spacing={2}
-                direction="row"
-                alignContent="center"
-                justifyContent="center"
-                sx={{ width: "100%", height: "100%" }}
-              >
-                {/* this slices the cards array to only display the amount you have previously determined per page*/}
-                {cards.slice(
-                  index * cardsPerPage,
-                  index * cardsPerPage + cardsPerPage
-                )}
-              </Stack>
-            </Slide>
-          </Box>
-        ))}
-      </Box>
-
       <IconButton
-        onClick={handleNextPage}
-        disabled={
-          currentPage >= Math.ceil((cards.length || 0) / cardsPerPage) - 1
-        }
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: "50%",
+          backgroundColor: (theme) => theme.palette.tertiaryLight.main,
+          cursor: "pointer",
+        }}
+        onClick={scrollPrev}
       >
-        <NavigateNextIcon />
+        <ChevronLeftIcon />
+      </IconButton>
+      <Box sx={{ overflow: "hidden" }} ref={emblaRef}>
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "nowrap",
+            gap: "2rem",
+          }}
+        >
+          {books.map((book) => (
+            <CarouselCard book={book} key={book.id} sx={embla_slide} />
+          ))}
+        </Box>
+      </Box>
+      <IconButton
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: "50%",
+          backgroundColor: (theme) => theme.palette.tertiaryLight.main,
+          cursor: "pointer",
+        }}
+        onClick={scrollNext}
+      >
+        <ChevronRightIcon />
       </IconButton>
     </Box>
   );
