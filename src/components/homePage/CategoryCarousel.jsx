@@ -9,8 +9,6 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 export default function CategoryCarousel({ books, screenWidth }) {
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [scrollSnaps, setScrollSnaps] = useState([]);
 
   const calculateSlidesToScroll = () => {
     if (screenWidth >= 1530) return 4;
@@ -22,8 +20,6 @@ export default function CategoryCarousel({ books, screenWidth }) {
   console.log("calculateSlidesToScroll()", calculateSlidesToScroll());
   const [emblaRef, emblaApi] = useEmblaCarousel({
     slidesToScroll: calculateSlidesToScroll(),
-    skipSnaps: false,
-    containScroll: "trimSnaps",
   });
 
   const scrollPrev = useCallback(() => {
@@ -41,17 +37,17 @@ export default function CategoryCarousel({ books, screenWidth }) {
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
-    setSelectedIndex(emblaApi.selectedScrollSnap());
+
     setPrevBtnEnabled(emblaApi.canScrollPrev());
     setNextBtnEnabled(emblaApi.canScrollNext());
-  }, [emblaApi, setSelectedIndex]);
+  }, [emblaApi]);
 
   useEffect(() => {
     if (!emblaApi) return;
     onSelect();
-    setScrollSnaps(emblaApi.scrollSnapList());
+
     emblaApi.on("select", onSelect);
-  }, [emblaApi, setScrollSnaps, onSelect]);
+  }, [emblaApi, onSelect]);
 
   return (
     <Box
