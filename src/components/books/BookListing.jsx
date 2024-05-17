@@ -184,44 +184,12 @@ function BookListing({ initialBooks, getBooksAction }) {
 
   return (
     <>
-      {/* <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "2rem",
-          "@media (max-width: 600px)": {
-            flexDirection: "column",
-          },
-          margin: "2rem",
-        }}
-      >
-        <TextField
-          id="outlined-basic"
-          label="Search books by name,author or title"
-          variant="outlined"
-          color="red"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          size="small"
-          sx={{
-            width: "30rem",
-            "@media (max-width: 1200px)": {
-              width: "20rem",
-            },
-          }}
-        />
-
-        <Button variant="contained" color="secondary" onClick={handleSubmit}>
-          Search Books
-        </Button>
-      </Box> */}
       <SearchBar
         handleSubmit={handleSubmit}
         onInputChange={handleInputChange}
         query={query}
       />
-
+      {console.log(books)}
       <Grid container spacing={2}>
         <Grid
           item

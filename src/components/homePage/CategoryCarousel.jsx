@@ -17,7 +17,6 @@ export default function CategoryCarousel({ books, screenWidth }) {
     else return 1;
   };
 
-  console.log("calculateSlidesToScroll()", calculateSlidesToScroll());
   const [emblaRef, emblaApi] = useEmblaCarousel({
     slidesToScroll: calculateSlidesToScroll(),
   });
@@ -82,7 +81,7 @@ export default function CategoryCarousel({ books, screenWidth }) {
           }}
         >
           {books.map((book) => (
-            <CarouselCard book={book} key={book.id} sx={embla_slide} />
+            <CarouselCard book={book} key={book.etag} sx={embla_slide} />
           ))}
         </Box>
       </Box>

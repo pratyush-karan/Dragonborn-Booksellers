@@ -1,6 +1,6 @@
 "use client";
 import { Box, Typography, Divider } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import IntroCarousel from "./IntroCarousel";
 import SearchBar from "../ui-library/SearchBar";
 import { useRouter } from "next/navigation";
@@ -11,6 +11,7 @@ function HomePageLayout({ data }) {
   const [query, setQuery] = useState("");
   const router = useRouter();
   const screenWidth = useScreenWidth();
+  const sectionRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
 
   const handleInputChage = (e) => {
     setQuery(e.target.value);
@@ -27,9 +28,12 @@ function HomePageLayout({ data }) {
     ["Top Authors", "/svg/top-authors.svg"],
   ];
 
+  const scrollToSection = (index) => {
+    sectionRefs[index].current.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <>
-      {console.log("Screen width:", screenWidth)}
       <Box
         sx={{
           display: "flex",
@@ -68,7 +72,7 @@ function HomePageLayout({ data }) {
               gap: "2rem",
             }}
           >
-            {mainCategories.map((category) => (
+            {mainCategories.map((category, index) => (
               <Box
                 key={category[1]}
                 sx={{
@@ -86,6 +90,7 @@ function HomePageLayout({ data }) {
                   color: category[0] === "Top Authors" ? "#fff" : "#000",
                   cursor: "pointer",
                 }}
+                onClick={() => scrollToSection(index)}
               >
                 {category[0]}
               </Box>
@@ -96,6 +101,7 @@ function HomePageLayout({ data }) {
         <Box sx={{ margin: "1rem 0rem" }}>
           {mainCategories.map((category, index) => (
             <Box
+              ref={sectionRefs[index]}
               key={category[1]}
               sx={{
                 display: "flex",
