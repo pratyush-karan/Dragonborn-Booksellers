@@ -6,6 +6,7 @@ import SearchBar from "../ui-library/SearchBar";
 import { useRouter } from "next/navigation";
 import CategoryCarousel from "./CategoryCarousel";
 import useScreenWidth from "@/hooks/useScreenWidth";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 function HomePageLayout({ data }) {
   const [query, setQuery] = useState("");
@@ -110,12 +111,37 @@ function HomePageLayout({ data }) {
                 marginBottom: "2rem",
               }}
             >
-              <Typography
-                variant="h5"
-                sx={{ margin: "1rem 0rem", fontWeight: "bold" }}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  margin: "1rem 0rem",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                  ":hover .explore-all": {
+                    opacity: 1,
+                    visibility: "visible",
+                  },
+                }}
               >
-                {category[0]}
-              </Typography>
+                <Typography variant="h5">{category[0]}</Typography>
+                <Typography
+                  variant="body1"
+                  className="explore-all"
+                  sx={{
+                    marginLeft: "20px",
+                    opacity: 0,
+                    visibility: "hidden",
+                    transition: "opacity 0.3s ease, visibility 0.3s ease",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <span>Explore All</span>
+                  <KeyboardArrowRightIcon />
+                </Typography>
+              </Box>
               <CategoryCarousel books={data[index]} screenWidth={screenWidth} />
               <Divider
                 sx={{
