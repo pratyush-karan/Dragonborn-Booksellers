@@ -84,7 +84,11 @@ export default function BasicUsage({
           </Box>
 
           <Box sx={{ display: "flex", marginTop: "1rem", gap: "1rem" }}>
-            <Image src={`${image}`} alt="" width={100} height={100} />
+            <img
+              src={`${image}`}
+              alt=""
+              style={{ width: "100px", height: "auto" }}
+            />
             <Grid container rowSpacing={0.25}>
               {format(otherDetails.authors) && (
                 <>

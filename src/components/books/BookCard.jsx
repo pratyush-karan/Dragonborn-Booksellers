@@ -22,6 +22,7 @@ import {
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { format } from "@/components/ui-library/helpers";
+
 const BookListingCard = forwardRef(({ book }, ref) => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();

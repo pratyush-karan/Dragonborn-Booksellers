@@ -2,7 +2,9 @@
 import { useState, useEffect } from "react";
 
 export default function useScreenWidth() {
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [screenWidth, setScreenWidth] = useState(
+    process.browser && window.innerWidth
+  );
 
   useEffect(() => {
     const handleResize = () => {
