@@ -33,6 +33,16 @@ function HomePageLayout({ data }) {
     sectionRefs[index].current.scrollIntoView({ behavior: "smooth" });
   };
 
+  const handleExploreAll = (category) => {
+    const routes = {
+      "Daily Top 100": "fantasy",
+      "New Releases": "new+releases",
+      BestSellers: "inspirational",
+      "Top Authors": "authors",
+    };
+    router.push(`/books?query=${routes[category]}`);
+  };
+
   return (
     <>
       <Box
@@ -138,7 +148,9 @@ function HomePageLayout({ data }) {
                     justifyContent: "center",
                   }}
                 >
-                  <span>Explore All</span>
+                  <span onClick={() => handleExploreAll(category[0])}>
+                    Explore All
+                  </span>
                   <KeyboardArrowRightIcon />
                 </Typography>
               </Box>
