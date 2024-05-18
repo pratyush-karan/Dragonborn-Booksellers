@@ -103,7 +103,12 @@ export default function NavBar({ children }) {
 
   return (
     <>
-      <AppBar position="static" sx={{ bgcolor: `primary.dark` }}>
+      <AppBar
+        position="static"
+        sx={{
+          bgcolor: `primary.dark`,
+        }}
+      >
         <Container sx={{ maxWidth: "90% !important" }}>
           <Toolbar disableGutters>
             <Box

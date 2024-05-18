@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import {
   addItemToCart,
@@ -11,7 +11,10 @@ import CartItemCard from "./CartItemCard";
 
 function CartDetails() {
   const dispatch = useDispatch();
-  const bookList = useSelector((state) => state.cartReducer);
+  const [bookList, setBookList] = useState(() =>
+    useSelector((state) => state.cartReducer)
+  );
+  //   const bookList = useSelector((state) => state.cartReducer);
   console.log(bookList);
   return (
     <Box
@@ -19,12 +22,17 @@ function CartDetails() {
         display: "flex",
         flexDirection: "column",
         width: "90%",
-        margin: "2rem auto 0rem auto",
+        padding: "1rem",
+        height: "fit-content",
+        margin: "4rem auto",
+        border: (theme) => `1px solid ${theme.palette.tertiary.main}`,
+        borderRadius: "10px",
+        boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.15)",
       }}
     >
       {bookList.itemList.length ? (
         <>
-          <Typography variant="h4" gutterBottom>
+          <Typography variant="h5" sx={{ marginBottom: "2rem" }}>
             Shopping Cart
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
