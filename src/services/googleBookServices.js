@@ -7,6 +7,7 @@ export async function searchBooks({
   orderBy = "relevance",
   category = "",
   current_max_results = 10,
+  filter = "",
 }) {
   const apiKey = process.env.GOOGLE_BOOKS_API_KEY;
 
@@ -21,6 +22,8 @@ export async function searchBooks({
   } else {
     url += `q=undefined`;
   }
+
+  if (filter) url += `filter=${filter}`;
   url += `&startIndex=${startIndex}&maxResults=${current_max_results}&orderBy=${orderBy}`;
 
   const res = await fetch(url, {

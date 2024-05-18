@@ -14,12 +14,14 @@ import { format } from "@/components/ui-library/helpers";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import BookViewModal from "@/components/modals/BookViewModal";
+import { useRouter } from "next/navigation";
 
 export default function CarouselCard({ book }) {
   const [open, setOpen] = useState(false);
   const handleOpenModal = () => setOpen(true);
   const handleCloseModal = () => setOpen(false);
   const saleability = book.saleInfo.saleability === "FOR_SALE" ? true : false;
+  const router = useRouter();
 
   return (
     <Card
@@ -57,6 +59,7 @@ export default function CarouselCard({ book }) {
           }}
           alt={book.volumeInfo.title}
           image={book.volumeInfo.imageLinks?.thumbnail}
+          onClick={() => router.push(`/books/${book.id}`)}
         />
         <Box
           sx={{
