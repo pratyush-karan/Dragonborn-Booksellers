@@ -18,10 +18,17 @@ import {
   ToggleButtonGroup,
 } from "@mui/material";
 import SearchBar from "../ui-library/SearchBar";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 function BookListing({ initialBooks, getBooksAction }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [openSnackBar, setOpenSnackBar] = useState({
+    open: false,
+    vertical: "top",
+    horizontal: "right",
+  });
 
   const initialCheckBoxStatus = {
     Fiction: false,
@@ -182,6 +189,18 @@ function BookListing({ initialBooks, getBooksAction }) {
     setQuery(e.target.value);
   };
 
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenSnackBar({ ...openSnackBar, open: false });
+  };
+
+  const handleOpenSnackBar = () => {
+    setOpenSnackBar({ ...openSnackBar, open: true });
+  };
+
   return (
     <>
       <SearchBar
@@ -190,6 +209,28 @@ function BookListing({ initialBooks, getBooksAction }) {
         query={query}
       />
       {console.log(books)}
+      <Snackbar
+        anchorOrigin={{
+          vertical: openSnackBar.vertical,
+          horizontal: openSnackBar.horizontal,
+        }}
+        open={openSnackBar.open}
+        onClose={handleClose}
+        autoHideDuration={3000}
+      >
+        <Alert
+          onClose={handleClose}
+          severity="success"
+          // variant="filled"
+          sx={{
+            width: "100%",
+            position: "relative",
+            top: "50px",
+          }}
+        >
+          Book is Added to Cart
+        </Alert>
+      </Snackbar>
       <Grid container spacing={2}>
         <Grid
           item
@@ -297,6 +338,7 @@ function BookListing({ initialBooks, getBooksAction }) {
                     <BookCard
                       book={book}
                       key={book.id}
+                      handleOpenSnackBar={handleOpenSnackBar}
                       ref={index === books.length - 1 ? ref : null}
                     />
                   ))}

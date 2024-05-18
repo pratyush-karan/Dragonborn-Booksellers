@@ -275,9 +275,9 @@ export default function NavBar({ children }) {
                 </>
               ) : (
                 <>
-                  <IconButton color="white" onClick={handleSignIn}>
+                  <Button color="white" onClick={handleSignIn}>
                     Login
-                  </IconButton>
+                  </Button>
                 </>
               )}
             </Box>

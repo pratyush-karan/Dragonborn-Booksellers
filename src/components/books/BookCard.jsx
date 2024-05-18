@@ -24,7 +24,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { format } from "@/components/ui-library/helpers";
 import { useRouter } from "next/navigation";
 
-const BookListingCard = forwardRef(({ book }, ref) => {
+const BookListingCard = forwardRef(({ book, handleOpenSnackBar }, ref) => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
@@ -51,6 +51,7 @@ const BookListingCard = forwardRef(({ book }, ref) => {
         price: book.saleInfo.retailPrice,
       })
     );
+    handleOpenSnackBar();
   };
 
   return (
