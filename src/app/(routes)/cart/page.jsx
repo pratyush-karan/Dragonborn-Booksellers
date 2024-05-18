@@ -1,6 +1,7 @@
 import React from "react";
 import { getServerSession } from "next-auth";
 import WhoAmIButton from "./WhoAmIButton";
+import CartDetails from "@/components/cartPage/CartDetails";
 
 export default async function CartPage() {
   const whoAmI = async () => {
@@ -10,10 +11,8 @@ export default async function CartPage() {
   };
   return (
     <div>
-      CartPage
-      <div>
-        <WhoAmIButton whoAmIAction={whoAmI} />
-      </div>
+      <CartDetails />
+      {/* <WhoAmIButton whoAmIAction={whoAmI} /> */}
     </div>
   );
 }

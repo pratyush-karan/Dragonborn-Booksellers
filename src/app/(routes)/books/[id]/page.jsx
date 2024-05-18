@@ -1,5 +1,5 @@
 import React from "react";
-import { getBookDetails } from "@/services/fetchbooks";
+import { getBookDetails } from "@/services/fetchbook";
 import BookDetails from "@/components/bookViewPage/BookDetails";
 
 export default async function BookViewPage({ params }) {

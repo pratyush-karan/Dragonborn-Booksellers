@@ -22,8 +22,10 @@ import {
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { format } from "@/components/ui-library/helpers";
+import { useRouter } from "next/navigation";
 
 const BookListingCard = forwardRef(({ book }, ref) => {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const bookList = useSelector((state) => state.cartReducer);
@@ -67,58 +69,75 @@ const BookListingCard = forwardRef(({ book }, ref) => {
         boxSizing: "border-box",
       }}
     >
-      <CardMedia
-        component="img"
-        height="140"
+      <Box
         sx={{
-          marginTop: "0.5rem",
-          width: "fit-content",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-around",
+          alignItems: "center",
+          width: "100%",
+          height: "100%",
+          cursor: "pointer",
         }}
-        image={book.volumeInfo.imageLinks?.thumbnail}
-        alt={book.volumeInfo.title}
-      />
-      <CardContent
-        sx={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}
+        onClick={() => router.push(`/books/${book.id}`)}
       >
-        <Typography variant="h6" component="h6" fontWeight="bold">
-          {book.volumeInfo.title}
-        </Typography>
-        <Typography variant="subtitle1">
-          {format(book.volumeInfo.authors)}
-        </Typography>
-        <Box
+        <CardMedia
+          component="img"
+          height="140"
+          sx={{
+            marginTop: "0.5rem",
+            width: "fit-content",
+          }}
+          image={book.volumeInfo.imageLinks?.thumbnail}
+          alt={book.volumeInfo.title}
+        />
+        <CardContent
           sx={{
             display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            gap: "0.5rem",
-            alignItems: "center",
+            flexDirection: "column",
+            gap: "0.25rem",
           }}
         >
-          {saleability ? (
-            <>
+          <Typography variant="h6" component="h6" fontWeight="bold">
+            {book.volumeInfo.title}
+          </Typography>
+          <Typography variant="subtitle1">
+            {format(book.volumeInfo.authors)}
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              gap: "0.5rem",
+              alignItems: "center",
+            }}
+          >
+            {saleability ? (
+              <>
+                <Typography
+                  sx={{
+                    fontWeight: "bold",
+                  }}
+                >
+                  {formatter.format(book.saleInfo.retailPrice.amount)}
+                </Typography>
+                <Typography sx={{ textDecoration: "line-through" }}>
+                  {formatter.format(book.saleInfo.listPrice.amount)}
+                </Typography>
+              </>
+            ) : (
               <Typography
                 sx={{
                   fontWeight: "bold",
                 }}
               >
-                {formatter.format(book.saleInfo.retailPrice.amount)}
+                Not For Sale!
               </Typography>
-              <Typography sx={{ textDecoration: "line-through" }}>
-                {formatter.format(book.saleInfo.listPrice.amount)}
-              </Typography>
-            </>
-          ) : (
-            <Typography
-              sx={{
-                fontWeight: "bold",
-              }}
-            >
-              Not For Sale!
-            </Typography>
-          )}
-        </Box>
-      </CardContent>
+            )}
+          </Box>
+        </CardContent>
+      </Box>
 
       <Divider
         sx={{

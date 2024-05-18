@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,9 +14,13 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import Badge from "@mui/material/Badge";
+import { styled } from "@mui/material/styles";
 import { useRouter } from "next/navigation";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { useSelector } from "react-redux";
 
 const pages = ["Home", "Books", "My Library", "Profile"];
 const settings = ["Your Orders", "Wish List", "Logout"];
@@ -85,6 +90,16 @@ export default function NavBar({ children }) {
         break;
     }
   };
+
+  const StyledBadge = styled(Badge)(({ theme }) => ({
+    "& .MuiBadge-badge": {
+      right: 5,
+      top: 0,
+      border: `2px solid ${theme.palette.background.paper}`,
+      padding: "0 4px",
+    },
+  }));
+  const bookList = useSelector((state) => state.cartReducer);
 
   return (
     <>
@@ -184,7 +199,37 @@ export default function NavBar({ children }) {
               ))}
             </Box>
 
-            <Box sx={{ flexGrow: 0 }}>
+            <Box
+              sx={{
+                flexGrow: 0,
+                display: "flex",
+                flexWrap: "nowrap",
+                gap: "1rem",
+              }}
+            >
+              <Button
+                aria-label="cart"
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                }}
+                onClick={() => router.push("/cart")}
+              >
+                <StyledBadge
+                  badgeContent={bookList.totalItems}
+                  color="secondary"
+                >
+                  <ShoppingCartIcon color="white" />
+                </StyledBadge>
+                <Typography
+                  variant="body2"
+                  sx={{ color: (theme) => theme.palette.white.main }}
+                >
+                  Cart
+                </Typography>
+              </Button>
               {session ? (
                 <>
                   <Tooltip title="Open options">
@@ -225,9 +270,9 @@ export default function NavBar({ children }) {
                 </>
               ) : (
                 <>
-                  <Button color="white" onClick={handleSignIn}>
+                  <IconButton color="white" onClick={handleSignIn}>
                     Login
-                  </Button>
+                  </IconButton>
                 </>
               )}
             </Box>
