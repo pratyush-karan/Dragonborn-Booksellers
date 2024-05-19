@@ -18,9 +18,9 @@ function SearchBar({ onInputChange, handleSubmit, query }) {
     >
       <TextField
         id="outlined-basic"
-        label="Search books by name,author or title"
+        label="Search books by name, author or title"
         variant="outlined"
-        color="red"
+        color="primary"
         value={query}
         onChange={onInputChange}
         size="small"
