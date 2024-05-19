@@ -16,7 +16,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";

@@ -14,7 +14,7 @@ import { format } from "@/components/ui-library/helpers";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import BookViewModal from "@/components/modals/BookViewModal";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 
 export default function CarouselCard({ book }) {
   const [open, setOpen] = useState(false);

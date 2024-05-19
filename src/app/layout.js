@@ -32,17 +32,17 @@ export default async function RootLayout({ children }) {
         />
       </head>
       <body>
-        <Providers>
-          <SessionProvider session={session}>
-            <AppRouterCacheProvider>
-              <ReduxProviders>
-                <MaterialUIThemeProvider>
-                  <NavBar>{children}</NavBar>
-                </MaterialUIThemeProvider>
-              </ReduxProviders>
-            </AppRouterCacheProvider>
-          </SessionProvider>
-        </Providers>
+        <SessionProvider session={session}>
+          <AppRouterCacheProvider>
+            <ReduxProviders>
+              <MaterialUIThemeProvider>
+                <NavBar>
+                  <Providers>{children}</Providers>
+                </NavBar>
+              </MaterialUIThemeProvider>
+            </ReduxProviders>
+          </AppRouterCacheProvider>
+        </SessionProvider>
       </body>
     </html>
   );

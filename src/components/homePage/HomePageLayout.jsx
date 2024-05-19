@@ -3,7 +3,7 @@ import { Box, Typography, Divider } from "@mui/material";
 import React, { useEffect, useState, useRef } from "react";
 import IntroCarousel from "./IntroCarousel";
 import SearchBar from "../ui-library/SearchBar";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import CategoryCarousel from "./CategoryCarousel";
 import useScreenWidth from "@/hooks/useScreenWidth";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";

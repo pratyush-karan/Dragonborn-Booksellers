@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import BookCard from "./BookCard";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import { useInView } from "react-intersection-observer";
 import {
   Typography,

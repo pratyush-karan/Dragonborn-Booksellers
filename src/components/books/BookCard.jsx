@@ -22,7 +22,7 @@ import {
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { format } from "@/components/ui-library/helpers";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 
 const BookListingCard = forwardRef(({ book, handleOpenSnackBar }, ref) => {
   const router = useRouter();
