@@ -5,6 +5,7 @@ import SessionProvider from "./providers/sessionProvider";
 import MaterialUIThemeProvider from "./providers/materialUIThemeProvider";
 import { getServerSession } from "next-auth";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
+import Providers from "./providers/ProgressBarProvider";
 
 export const metadata = {
   title: "Dragonborn Booksellers",
@@ -31,15 +32,17 @@ export default async function RootLayout({ children }) {
         />
       </head>
       <body>
-        <SessionProvider session={session}>
-          <AppRouterCacheProvider>
-            <ReduxProviders>
-              <MaterialUIThemeProvider>
-                <NavBar>{children}</NavBar>
-              </MaterialUIThemeProvider>
-            </ReduxProviders>
-          </AppRouterCacheProvider>
-        </SessionProvider>
+        <Providers>
+          <SessionProvider session={session}>
+            <AppRouterCacheProvider>
+              <ReduxProviders>
+                <MaterialUIThemeProvider>
+                  <NavBar>{children}</NavBar>
+                </MaterialUIThemeProvider>
+              </ReduxProviders>
+            </AppRouterCacheProvider>
+          </SessionProvider>
+        </Providers>
       </body>
     </html>
   );

@@ -5,7 +5,7 @@ import BookDetails from "@/components/bookViewPage/BookDetails";
 export default async function BookViewPage({ params }) {
   const getBook = async (id) => {
     "use server";
-    const res = await getBookDetails(id);
+    const res = await getBookDetails({ id: id });
     return res;
   };
 

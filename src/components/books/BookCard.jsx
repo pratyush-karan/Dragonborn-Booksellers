@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, Fragment, forwardRef } from "react";
+import React, { useState, Fragment, forwardRef, useEffect } from "react";
 import BookViewModal from "../modals/BookViewModal";
 import {
   addItemToCart,

@@ -22,7 +22,7 @@ import Image from "next/image";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useSelector } from "react-redux";
 
-const pages = ["Home", "Books", "My Library", "Profile"];
+const pages = ["Home", "Books", "Profile"];
 const settings = ["Your Orders", "Wish List", "Logout"];
 
 export default function NavBar({ children }) {
@@ -49,9 +49,6 @@ export default function NavBar({ children }) {
           break;
         case "Books":
           route = "/books";
-          break;
-        case "My Library":
-          route = "/mylibrary";
           break;
         case "Profile":
           route = "/profile";
