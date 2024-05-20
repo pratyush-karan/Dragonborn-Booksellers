@@ -11,6 +11,7 @@ const Providers = ({ children }) => {
         color="#ffc107"
         options={{ showSpinner: false }}
         shallowRouting
+        style={{ position: "relative", zIndex: 1000 }}
       />
     </>
   );

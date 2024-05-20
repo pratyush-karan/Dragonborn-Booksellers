@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -27,10 +28,10 @@ const settings = ["Your Orders", "Wish List", "Logout"];
 
 export default function NavBar({ children }) {
   const router = useRouter();
+  const pathname = usePathname();
   const { data: session } = useSession();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const pathname = usePathname();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -90,7 +91,8 @@ export default function NavBar({ children }) {
       <AppBar
         position="sticky"
         sx={{
-          bgcolor: `primary.dark`,
+          backgroundColor: `primary.dark`,
+          zIndex: 1,
         }}
       >
         <Container sx={{ maxWidth: "90% !important" }}>
