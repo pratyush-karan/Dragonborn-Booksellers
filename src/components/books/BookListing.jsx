@@ -163,25 +163,6 @@ function BookListing({ initialBooks, getBooksAction }) {
     } else {
       router.push(pathname + "?" + deleteQueryString("category"));
     }
-
-    // const newBooks = await getBooksAction({
-    //   query: searchParams.get("query") || undefined,
-    //   page: page.current,
-    //   category: cat,
-    //   orderBy: orderBy,
-    // });
-
-    // const uniqueNewBooks = {};
-    // newBooks.forEach((item) => {
-    //   uniqueNewBooks[item.id] = item;
-    // });
-    // const newUniqueBooks = Object.values(uniqueNewBooks);
-    // if (newUniqueBooks.length) {
-    //   setBooks(newUniqueBooks);
-    // } else {
-    //   setBooks([]);
-    //   setError("No Books Found");
-    // }
   };
 
   const handleOrderby = async (e) => {
@@ -189,34 +170,6 @@ function BookListing({ initialBooks, getBooksAction }) {
     router.push(pathname + "?" + createQueryString("orderBy", e.target.value));
     setError(null);
     setHasMoreBooks(true);
-
-    // page.current = 0;
-
-    // let cat;
-    // for (let [k, v] of Object.entries(checkBoxStatus)) {
-    //   if (v === true) {
-    //     cat = k;
-    //   }
-    // }
-
-    // const newBooks = await getBooksAction({
-    //   query: searchParams.get("query") || undefined,
-    //   page: page.current,
-    //   category: cat,
-    //   orderBy: e.target.value,
-    // });
-
-    // const uniqueNewBooks = {};
-    // newBooks.forEach((item) => {
-    //   uniqueNewBooks[item.id] = item;
-    // });
-    // const newUniqueBooks = Object.values(uniqueNewBooks);
-    // if (newUniqueBooks.length) {
-    //   setBooks(newUniqueBooks);
-    // } else {
-    //   setBooks([]);
-    //   setError("No Books Found");
-    // }
   };
 
   useEffect(() => {
