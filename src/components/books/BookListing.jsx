@@ -1,7 +1,7 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import BookCard from "./BookCard";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, usePathname } from "next/navigation";
 import { useRouter } from "next-nprogress-bar";
 import { useInView } from "react-intersection-observer";
 import {
@@ -24,6 +24,7 @@ import Alert from "@mui/material/Alert";
 
 function BookListing({ initialBooks, getBooksAction }) {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const [openSnackBar, setOpenSnackBar] = useState({
     open: false,
@@ -40,12 +41,30 @@ function BookListing({ initialBooks, getBooksAction }) {
     Mystery: false,
     Romance: false,
   };
-  const [checkBoxStatus, setCheckBoxStatus] = useState(initialCheckBoxStatus);
-  const [orderBy, setOrderBy] = useState("relevance");
+
+  const getInitialCheckBoxStatus = () => {
+    const category = searchParams.get("category");
+    if (category) initialCheckBoxStatus[category] = true;
+    else {
+      for (let k in initialCheckBoxStatus) {
+        if (initialCheckBoxStatus.hasOwnProperty(k)) {
+          initialCheckBoxStatus[k] = false;
+        }
+      }
+    }
+    return initialCheckBoxStatus;
+  };
 
   const getInitialQuery = () => {
     return searchParams.get("query") || "";
   };
+  const getInitialOrderBy = () => {
+    return searchParams.get("orderBy") || "relevance";
+  };
+  const [checkBoxStatus, setCheckBoxStatus] = useState(
+    getInitialCheckBoxStatus
+  );
+  const [orderBy, setOrderBy] = useState(getInitialOrderBy);
   const page = useRef(0);
   const [query, setQuery] = useState(getInitialQuery);
   const [books, setBooks] = useState(initialBooks);
@@ -53,15 +72,30 @@ function BookListing({ initialBooks, getBooksAction }) {
   const [error, setError] = useState(null);
   const [hasMoreBooks, setHasMoreBooks] = useState(true);
 
+  const createQueryString = useCallback(
+    (name, value) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+      return params.toString();
+    },
+    [searchParams]
+  );
+
+  const deleteQueryString = useCallback(
+    (name) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete(name);
+      return params.toString();
+    },
+    [searchParams]
+  );
+
   const handleSubmit = (e) => {
     if (query.trim()) {
       setError(null);
       setHasMoreBooks(true);
       e.preventDefault();
-      router.push(`/books?query=${query}`);
-      page.current = 0;
-      setCheckBoxStatus(initialCheckBoxStatus);
-      setOrderBy("relevance");
+      router.push(pathname + "?" + createQueryString("query", query.trim()));
     }
   };
 
@@ -69,12 +103,13 @@ function BookListing({ initialBooks, getBooksAction }) {
     if (initialBooks.length) {
       setBooks(initialBooks);
     } else {
+      setBooks([]);
       setError("No Books Found");
     }
   }, [initialBooks]);
 
   const handleNextPage = async () => {
-    page.current += 10;
+    page.current += 12;
     let cat;
     for (let [k, v] of Object.entries(checkBoxStatus)) {
       if (v === true) {
@@ -87,7 +122,7 @@ function BookListing({ initialBooks, getBooksAction }) {
       category: cat,
       orderBy: orderBy,
     });
-    console.log(page.current, newBooks);
+
     if (newBooks.length > 0) {
       setBooks((prev) =>
         Array.from(new Set([...prev, ...newBooks].map((book) => book.id))).map(
@@ -115,7 +150,6 @@ function BookListing({ initialBooks, getBooksAction }) {
       }
     }
     setCheckBoxStatus(copy);
-    page.current = 0;
 
     let cat;
     for (let [k, v] of Object.entries(copy)) {
@@ -124,64 +158,69 @@ function BookListing({ initialBooks, getBooksAction }) {
       }
     }
 
-    const newBooks = await getBooksAction({
-      query: searchParams.get("query") || undefined,
-      page: page.current,
-      category: cat,
-      orderBy: orderBy,
-    });
-
-    const uniqueNewBooks = {};
-    newBooks.forEach((item) => {
-      uniqueNewBooks[item.id] = item;
-    });
-    const newUniqueBooks = Object.values(uniqueNewBooks);
-    if (newUniqueBooks.length) {
-      setBooks(newUniqueBooks);
+    if (cat) {
+      router.push(pathname + "?" + createQueryString("category", cat));
     } else {
-      setBooks([]);
-      setError("No Books Found");
+      router.push(pathname + "?" + deleteQueryString("category"));
     }
+
+    // const newBooks = await getBooksAction({
+    //   query: searchParams.get("query") || undefined,
+    //   page: page.current,
+    //   category: cat,
+    //   orderBy: orderBy,
+    // });
+
+    // const uniqueNewBooks = {};
+    // newBooks.forEach((item) => {
+    //   uniqueNewBooks[item.id] = item;
+    // });
+    // const newUniqueBooks = Object.values(uniqueNewBooks);
+    // if (newUniqueBooks.length) {
+    //   setBooks(newUniqueBooks);
+    // } else {
+    //   setBooks([]);
+    //   setError("No Books Found");
+    // }
   };
 
   const handleOrderby = async (e) => {
     setOrderBy(e.target.value);
-
+    router.push(pathname + "?" + createQueryString("orderBy", e.target.value));
     setError(null);
     setHasMoreBooks(true);
 
-    page.current = 0;
+    // page.current = 0;
 
-    let cat;
-    for (let [k, v] of Object.entries(checkBoxStatus)) {
-      if (v === true) {
-        cat = k;
-      }
-    }
+    // let cat;
+    // for (let [k, v] of Object.entries(checkBoxStatus)) {
+    //   if (v === true) {
+    //     cat = k;
+    //   }
+    // }
 
-    const newBooks = await getBooksAction({
-      query: searchParams.get("query") || undefined,
-      page: page.current,
-      category: cat,
-      orderBy: e.target.value,
-    });
+    // const newBooks = await getBooksAction({
+    //   query: searchParams.get("query") || undefined,
+    //   page: page.current,
+    //   category: cat,
+    //   orderBy: e.target.value,
+    // });
 
-    const uniqueNewBooks = {};
-    newBooks.forEach((item) => {
-      uniqueNewBooks[item.id] = item;
-    });
-    const newUniqueBooks = Object.values(uniqueNewBooks);
-    if (newUniqueBooks.length) {
-      setBooks(newUniqueBooks);
-    } else {
-      setBooks([]);
-      setError("No Books Found");
-    }
+    // const uniqueNewBooks = {};
+    // newBooks.forEach((item) => {
+    //   uniqueNewBooks[item.id] = item;
+    // });
+    // const newUniqueBooks = Object.values(uniqueNewBooks);
+    // if (newUniqueBooks.length) {
+    //   setBooks(newUniqueBooks);
+    // } else {
+    //   setBooks([]);
+    //   setError("No Books Found");
+    // }
   };
 
   useEffect(() => {
     if (inView) {
-      console.log("hi");
       handleNextPage();
     }
   }, [inView]);
@@ -229,7 +268,7 @@ function BookListing({ initialBooks, getBooksAction }) {
             top: "50px",
           }}
         >
-          Book is Added to Cart
+          Book is added to the Cart
         </Alert>
       </Snackbar>
       <Grid container spacing={2}>

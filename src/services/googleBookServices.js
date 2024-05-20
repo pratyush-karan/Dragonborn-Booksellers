@@ -6,7 +6,7 @@ export async function searchBooks({
   startIndex = 0,
   orderBy = "relevance",
   category = "",
-  current_max_results = 10,
+  current_max_results = 12,
   filter = "",
 }) {
   const apiKey = process.env.GOOGLE_BOOKS_API_KEY;

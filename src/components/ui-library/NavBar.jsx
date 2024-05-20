@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -21,6 +20,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useSelector } from "react-redux";
+import { usePathname } from "next/navigation";
 
 const pages = ["Home", "Books", "Profile"];
 const settings = ["Your Orders", "Wish List", "Logout"];
@@ -30,6 +30,7 @@ export default function NavBar({ children }) {
   const { data: session } = useSession();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const pathname = usePathname();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -41,23 +42,9 @@ export default function NavBar({ children }) {
   const handleCloseNavMenu = (e) => {
     setAnchorElNav(null);
 
-    if (e.target.textContent) {
-      let route = "";
-      switch (e.target.textContent) {
-        case "Home":
-          route = "/";
-          break;
-        case "Books":
-          route = "/books";
-          break;
-        case "Profile":
-          route = "/profile";
-          break;
-        case "Cart":
-          route = "/cart";
-          break;
-      }
-      router.push(route);
+    if (pathname !== `/${e.target.textContent.toLowerCase()}`) {
+      if (e.target.textContent === "Home") router.push("/");
+      else router.push(`/${e.target.textContent.toLowerCase()}`);
     }
   };
 
@@ -101,7 +88,7 @@ export default function NavBar({ children }) {
   return (
     <>
       <AppBar
-        position="static"
+        position="sticky"
         sx={{
           bgcolor: `primary.dark`,
         }}

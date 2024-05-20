@@ -12,10 +12,24 @@ export default async function BookListingPage({ searchParams }) {
       orderBy: orderBy,
     });
 
-    if (res.items) return res.items;
-    else return [];
+    const filterUniqueBooks = (books) => {
+      const uniqueNewBooks = {};
+      books?.forEach((item) => {
+        uniqueNewBooks[item.id] = item;
+      });
+      return Object.values(uniqueNewBooks);
+    };
+
+    // if (res.items) return filterUniqueBooks(res.items);
+    // else return [];
+    return filterUniqueBooks(res.items);
   };
 
-  const initialBooks = await getBooks({ query: searchParams.query });
+  const initialBooks = await getBooks({
+    query: searchParams.query,
+    page: 0,
+    orderBy: searchParams.orderBy,
+    category: searchParams.category,
+  });
   return <BookListing getBooksAction={getBooks} initialBooks={initialBooks} />;
 }
