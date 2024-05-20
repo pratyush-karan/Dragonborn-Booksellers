@@ -1,5 +1,5 @@
 "use client";
-import { Box, Typography, Divider } from "@mui/material";
+import { Box, Typography, Divider, Grid } from "@mui/material";
 import React, { useEffect, useState, useRef } from "react";
 import IntroCarousel from "./IntroCarousel";
 import SearchBar from "../ui-library/SearchBar";
@@ -71,42 +71,45 @@ function HomePageLayout({ data }) {
             alignItems: "center",
           }}
         >
-          <IntroCarousel />
+          <Grid container spacing={2}>
+            <Grid item xs={12} lg={6}>
+              <IntroCarousel />
+            </Grid>
 
-          <Box
-            sx={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-              flexWrap: "wrap",
-              alignItems: "center",
-              gap: "2rem",
-            }}
-          >
-            {mainCategories.map((category, index) => (
-              <Box
-                key={category[1]}
-                sx={{
-                  backgroundImage: `url(${category[1]})`,
-                  backgroundSize: "cover",
-                  backgroundRepeat: "no-repeat",
-                  width: "250px",
-                  height: "150px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  fontSize: "40px",
-                  border: "1px solid black",
-                  borderRadius: "5px",
-                  color: category[0] === "Top Authors" ? "#fff" : "#000",
-                  cursor: "pointer",
-                }}
-                onClick={() => scrollToSection(index)}
-              >
-                {category[0]}
-              </Box>
-            ))}
-          </Box>
+            <Grid item xs={12} lg={6}>
+              <Typography variant="h6" gutterBottom>
+                Browse by Category :-
+              </Typography>
+
+              <Grid container spacing={2}>
+                {mainCategories.map((category, index) => (
+                  <Grid item xs={12} sm={6}>
+                    <Box
+                      key={category[1]}
+                      sx={{
+                        backgroundImage: `url(${category[1]})`,
+                        backgroundSize: "cover",
+                        backgroundRepeat: "no-repeat",
+                        width: "250px",
+                        height: "150px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontSize: "40px",
+                        border: "1px solid black",
+                        borderRadius: "5px",
+                        color: category[0] === "Top Authors" ? "#fff" : "#000",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => scrollToSection(index)}
+                    >
+                      {category[0]}
+                    </Box>
+                  </Grid>
+                ))}
+              </Grid>
+            </Grid>
+          </Grid>
         </Box>
 
         <Box sx={{ margin: "1rem 0rem" }}>

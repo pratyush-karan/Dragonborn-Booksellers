@@ -103,13 +103,7 @@ export default function NavBar({ children }) {
                 display: { xs: "none", md: "flex" },
               }}
             >
-              <Image
-                src="/icon.png"
-                alt="dragon"
-                width={50}
-                height={50}
-                onClick={() => router.push("/")}
-              />
+              <Image src="/icon.png" alt="dragon" width={50} height={50} />
             </Box>
 
             <Box
@@ -147,7 +141,17 @@ export default function NavBar({ children }) {
                 }}
               >
                 {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <MenuItem
+                    key={page}
+                    onClick={handleCloseNavMenu}
+                    sx={{
+                      ":hover": {
+                        cursor: "pointer",
+                        backgroundColor: (theme) =>
+                          theme.palette.tertiaryLight.main,
+                      },
+                    }}
+                  >
                     <Typography textAlign="center">{page}</Typography>
                   </MenuItem>
                 ))}
@@ -161,13 +165,7 @@ export default function NavBar({ children }) {
                 flexGrow: 1,
               }}
             >
-              <Image
-                src="/icon.png"
-                alt="dragon"
-                width={50}
-                height={50}
-                onClick={() => router.push("/")}
-              />
+              <Image src="/icon.png" alt="dragon" width={50} height={50} />
             </Box>
             <Box
               sx={{
@@ -183,6 +181,10 @@ export default function NavBar({ children }) {
                     my: 2,
                     display: "block",
                     color: (theme) => theme.palette.white.main,
+                    ":hover": {
+                      outline: (theme) =>
+                        `1px solid ${theme.palette.white.main}`,
+                    },
                   }}
                 >
                   {page}
@@ -205,6 +207,9 @@ export default function NavBar({ children }) {
                   justifyContent: "center",
                   alignItems: "center",
                   gap: "0.5rem",
+                  ":hover": {
+                    outline: (theme) => `1px solid ${theme.palette.white.main}`,
+                  },
                 }}
                 onClick={() => router.push("/cart")}
               >
