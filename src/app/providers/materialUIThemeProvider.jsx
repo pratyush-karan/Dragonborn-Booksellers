@@ -40,6 +40,9 @@ export default function ({ children }) {
       blueGrey: {
         main: blueGrey[500],
       },
+      blueGreyDark: {
+        main: blueGrey[700],
+      },
       red: {
         main: red[500],
       },

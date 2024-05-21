@@ -155,35 +155,39 @@ const BookListingCard = forwardRef(({ book, handleOpenSnackBar }, ref) => {
         }}
       >
         <Button
+          startIcon={<VisibilityIcon fontSize="small" />}
           size="small"
           onClick={handleOpenModal}
           variant="contained"
           color="blueGrey"
           sx={{
+            textAlign: "center",
             color: (theme) => theme.palette.white.main,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "0.25rem",
+            width: "130px",
+            height: "32px",
+            ":hover": {
+              bgcolor: (theme) => theme.palette.blueGreyDark.main,
+            },
           }}
         >
-          <VisibilityIcon fontSize="small" />
-          <span>View Book</span>
+          View Book
         </Button>
         <Button
+          startIcon={<ShoppingCartIcon fontSize="small" />}
           size="small"
           onClick={() => handleAddtoCart()}
           disabled={!saleability}
           variant="contained"
           sx={{
+            width: "130px",
+            height: "32px",
             bgcolor: (theme) => theme.palette.secondary.light,
             ":hover": {
               bgcolor: (theme) => theme.palette.secondary.dark,
             },
           }}
         >
-          <ShoppingCartIcon fontSize="small" />
-          <span>Add to cart</span>
+          Add to cart
         </Button>
       </CardActions>
       <BookViewModal

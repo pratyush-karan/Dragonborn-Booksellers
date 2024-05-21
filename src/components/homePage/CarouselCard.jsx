@@ -33,7 +33,9 @@ export default function CarouselCard({ book }) {
         boxShadow: (theme) =>
           `0 2px 5px ${theme.palette.tertiaryLight.main} !important`,
         borderRadius: "10px",
+        cursor: "pointer",
       }}
+      onClick={() => router.push(`/books/${book.id}`)}
     >
       <Box
         sx={{
@@ -51,7 +53,7 @@ export default function CarouselCard({ book }) {
           sx={{
             width: "100px",
             transition: "transform 0.2s ease",
-            cursor: "pointer",
+
             ":hover": {
               transform: "scale(1.1)",
               zIndex: 1,
@@ -59,7 +61,6 @@ export default function CarouselCard({ book }) {
           }}
           alt={book.volumeInfo.title}
           image={book.volumeInfo.imageLinks?.thumbnail}
-          onClick={() => router.push(`/books/${book.id}`)}
         />
         <Box
           sx={{

@@ -10,10 +10,5 @@ export default async function BookViewPage({ params }) {
   };
 
   const bookData = await getBook(params.id);
-  return (
-    <div>
-      <div>BookViewPage : {params.id}</div>
-      <BookDetails bookData={bookData} />
-    </div>
-  );
+  return <BookDetails bookData={bookData} />;
 }
