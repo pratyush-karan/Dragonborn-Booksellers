@@ -192,12 +192,15 @@ function BookDetails({ bookData }) {
                       <TableCell align="left" sx={{ border: "none" }}>
                         <Typography
                           variant="subtitle2"
-                          sx={{ fontWeight: "bold" }}
+                          sx={{ fontWeight: "bold", fontSize: "1rem" }}
                         >
                           {row.name}
                         </Typography>
                       </TableCell>
-                      <TableCell align="center" sx={{ border: "none" }}>
+                      <TableCell
+                        align="center"
+                        sx={{ border: "none", fontSize: "1rem" }}
+                      >
                         {row.value}
                       </TableCell>
                     </TableRow>

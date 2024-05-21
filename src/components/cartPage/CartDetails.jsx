@@ -32,7 +32,7 @@ function CartDetails() {
     >
       {bookList.itemList.length ? (
         <>
-          <Typography variant="h5" sx={{ marginBottom: "2rem" }}>
+          <Typography variant="h6" sx={{ marginBottom: "2rem" }}>
             Shopping Cart
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
