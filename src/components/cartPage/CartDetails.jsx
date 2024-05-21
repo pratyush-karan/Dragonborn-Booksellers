@@ -9,7 +9,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import CartItemCard from "./CartItemCard";
 
-function CartDetails() {
+export default function CartDetails() {
   const dispatch = useDispatch();
   const [bookList, setBookList] = useState(() =>
     useSelector((state) => state.cartReducer)
@@ -49,5 +49,3 @@ function CartDetails() {
     </Box>
   );
 }
-
-export default CartDetails;
