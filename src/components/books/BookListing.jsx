@@ -29,7 +29,7 @@ function BookListing({ initialBooks, getBooksAction }) {
   const [openSnackBar, setOpenSnackBar] = useState({
     open: false,
     vertical: "top",
-    horizontal: "right",
+    horizontal: "center",
   });
 
   const initialCheckBoxStatus = {
@@ -215,11 +215,6 @@ function BookListing({ initialBooks, getBooksAction }) {
           onClose={handleClose}
           severity="success"
           // variant="filled"
-          sx={{
-            width: "100%",
-            position: "relative",
-            top: "50px",
-          }}
         >
           Book is added to the Cart
         </Alert>
