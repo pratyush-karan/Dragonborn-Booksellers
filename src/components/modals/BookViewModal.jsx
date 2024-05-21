@@ -66,10 +66,9 @@ export default function BasicUsage({
             sx={{
               display: "flex",
               justifyContent: "space-between",
-              alignItems: "center",
             }}
           >
-            <Typography variant="h5">{title}</Typography>
+            <Typography variant="h6">{title}</Typography>
             <CloseIcon
               fontSize="small"
               onClick={handleCloseModal}
@@ -84,39 +83,44 @@ export default function BasicUsage({
           </Box>
 
           <Box sx={{ display: "flex", marginTop: "1rem", gap: "1rem" }}>
-            <img
+            <Image
               src={`${image}`}
               alt=""
-              style={{ width: "100px", height: "auto" }}
+              width={120}
+              height={120}
+              layout="responsive"
+              style={{ maxWidth: "120px" }}
             />
-            <Grid container rowSpacing={0.25}>
+            <Grid
+              container
+              rowSpacing={0.25}
+              // sx={{ flexWrap: "nowrap", flexDirection: "column" }}
+            >
               {format(otherDetails.authors) && (
                 <>
-                  <Grid item xs={3} flex="auto">
-                    <Typography sx={{ fontWeight: "bold" }}>
-                      Author :
-                    </Typography>
+                  <Grid item xs={3}>
+                    <Typography sx={{ fontWeight: "bold" }}>Author:</Typography>
                   </Grid>
-                  <Grid item xs={9} flex="auto">
+                  <Grid item xs={9}>
                     <Typography>{format(otherDetails.authors)}</Typography>
                   </Grid>
                 </>
               )}
               {format(otherDetails.genre) && (
                 <>
-                  <Grid item xs={3} flex="auto">
-                    <Typography sx={{ fontWeight: "bold" }}>Genre :</Typography>
+                  <Grid item xs={3}>
+                    <Typography sx={{ fontWeight: "bold" }}>Genre:</Typography>
                   </Grid>
-                  <Grid item xs={9} flex="auto">
+                  <Grid item xs={9}>
                     <Typography>{format(otherDetails.genre)}</Typography>
                   </Grid>
                 </>
               )}
-              <Grid item xs={3} flex="auto">
-                <Typography sx={{ fontWeight: "bold" }}>Price :</Typography>
+              <Grid item xs={3}>
+                <Typography sx={{ fontWeight: "bold" }}>Price:</Typography>
               </Grid>
 
-              <Grid item xs={9} flex="auto">
+              <Grid item xs={9}>
                 {otherDetails.saleability ? (
                   <Box
                     sx={{
@@ -143,10 +147,10 @@ export default function BasicUsage({
 
               {otherDetails.isbn && (
                 <>
-                  <Grid item xs={3} flex="auto">
-                    <Typography sx={{ fontWeight: "bold" }}>ISBN :</Typography>
+                  <Grid item xs={3}>
+                    <Typography sx={{ fontWeight: "bold" }}>ISBN:</Typography>
                   </Grid>
-                  <Grid item xs={9} flex="auto">
+                  <Grid item xs={9}>
                     <Typography>{otherDetails.isbn}</Typography>
                   </Grid>
                 </>
@@ -163,20 +167,30 @@ export default function BasicUsage({
                 maxHeight: "500px",
               }}
             >
-              {description}
+              {description.replace(/^_*|_*$/g, "")}
             </Typography>
           )}
 
           <Divider sx={{ width: "100%", margin: "1rem 0px" }} />
+
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Button
-              variant="contained"
-              color="tertiary"
-              onClick={handleAddtoCart}
+              size="small"
+              startIcon={<ShoppingCartIcon />}
+              onClick={() => handleAddtoCart()}
               disabled={!otherDetails.saleability}
+              variant="contained"
+              sx={{
+                height: "40px",
+                width: "140px",
+                bgcolor: (theme) => theme.palette.secondary.light,
+                textAlign: "center",
+                ":hover": {
+                  bgcolor: (theme) => theme.palette.secondary.dark,
+                },
+              }}
             >
-              <ShoppingCartIcon fontSize="small" />
-              <Typography>Add To Cart</Typography>
+              Add to cart
             </Button>
           </Box>
         </Box>

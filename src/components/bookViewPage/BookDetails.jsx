@@ -79,9 +79,7 @@ function BookDetails({ bookData }) {
     {
       name: "Price:",
       value: saleability ? (
-        <Box
-          sx={{ display: "flex", justifyContent: "flex-end", gap: "0.5rem" }}
-        >
+        <Box sx={{ display: "flex", justifyContent: "center", gap: "0.5rem" }}>
           <Typography sx={{ fontWeight: "bold", color: "green.main" }}>
             {formatter.format(bookData.saleInfo.retailPrice.amount)}
           </Typography>
@@ -199,7 +197,7 @@ function BookDetails({ bookData }) {
                           {row.name}
                         </Typography>
                       </TableCell>
-                      <TableCell align="right" sx={{ border: "none" }}>
+                      <TableCell align="center" sx={{ border: "none" }}>
                         {row.value}
                       </TableCell>
                     </TableRow>
