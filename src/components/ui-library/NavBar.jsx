@@ -103,7 +103,14 @@ export default function NavBar({ children }) {
                 display: { xs: "none", md: "flex" },
               }}
             >
-              <Image src="/icon.png" alt="dragon" width={50} height={50} />
+              <Image
+                src="/icon.png"
+                alt="dragon"
+                width={50}
+                height={50}
+                style={{ cursor: "pointer" }}
+                onClick={() => router.push("/")}
+              />
             </Box>
 
             <Box
@@ -165,7 +172,14 @@ export default function NavBar({ children }) {
                 flexGrow: 1,
               }}
             >
-              <Image src="/icon.png" alt="dragon" width={50} height={50} />
+              <Image
+                src="/icon.png"
+                alt="dragon"
+                width={50}
+                height={50}
+                style={{ cursor: "pointer" }}
+                onClick={() => router.push("/")}
+              />
             </Box>
             <Box
               sx={{
