@@ -63,9 +63,19 @@ export const cart = createSlice({
         itemList: updatedItemList,
       };
     },
+    removeAllItemsFromCart: () => {
+      return {
+        totalItems: 0,
+        itemList: [],
+      };
+    },
   },
 });
 
-export const { addItemToCart, removeItemFromCart, removeItemsFromCart } =
-  cart.actions;
+export const {
+  addItemToCart,
+  removeItemFromCart,
+  removeItemsFromCart,
+  removeAllItemsFromCart,
+} = cart.actions;
 export default cart.reducer;
