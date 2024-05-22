@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Grid, Typography, Button } from "@mui/material";
 import Image from "next/image";
 import TextField from "@mui/material/TextField";
 import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
 import Autocomplete from "@mui/material/Autocomplete";
+import { useDispatch, useSelector } from "react-redux";
+import { updateProfile } from "@/redux/features/profile-slice";
 
 function ProfilePageDetails({ session }) {
   const gridStyles = {
@@ -15,16 +17,21 @@ function ProfilePageDetails({ session }) {
     boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.15)",
   };
 
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const handlePhoneChange = (newValue) => {
-    // matchIsValidTel(newValue, {
-    //   onlyCountryies: ["IN"], // optional,
-    //   excludedCountryies: [], // optional
-    //   continents: [], // optional
-    // }); // true | false
+  const dispatch = useDispatch();
+  const profileDetails = useSelector((state) => state.profileReducer);
+  const [formData, setFormData] = useState(
+    useSelector((state) => state.profileReducer)
+  );
 
-    setPhoneNumber(newValue);
-  };
+  //   const handlePhoneChange = (newValue) => {
+  //     // matchIsValidTel(newValue, {
+  //     //   onlyCountryies: ["IN"], // optional,
+  //     //   excludedCountryies: [], // optional
+  //     //   continents: [], // optional
+  //     // }); // true | false
+
+  //     setPhoneNumber(newValue);
+  //   };
 
   const statesAndUTs = [
     "Andhra Pradesh",
@@ -64,22 +71,28 @@ function ProfilePageDetails({ session }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("hi");
+    dispatch(updateProfile(formData));
   };
+
+  useEffect(() => {
+    setFormData(profileDetails);
+  }, [profileDetails]);
 
   return (
     <Grid
       container
       spacing={2}
-      flexDirection="row"
       flexWrap="nowrap"
       gap="2rem"
-      sx={{ width: "90%", margin: "2rem auto" }}
+      sx={{
+        width: "90%",
+        margin: "2rem auto",
+        flexDirection: { xs: "column", lg: "row" },
+      }}
     >
-      {console.log("session", session)}
       <Grid
         item
-        xs={3}
+        lg={3}
         sx={{
           ...gridStyles,
           display: "flex",
@@ -124,7 +137,7 @@ function ProfilePageDetails({ session }) {
       </Grid>
       <Grid
         item
-        xs={9}
+        lg={9}
         sx={{
           ...gridStyles,
           //   display: "flex",
@@ -154,18 +167,34 @@ function ProfilePageDetails({ session }) {
               label="First Name"
               variant="outlined"
               required
+              value={formData.fname}
+              onChange={(e) =>
+                setFormData((prev) => {
+                  return { ...prev, fname: e.target.value };
+                })
+              }
             />
             <TextField
               id="lname"
               label="Last Name"
               variant="outlined"
               required
+              value={formData.lname}
+              onChange={(e) =>
+                setFormData((prev) => {
+                  return { ...prev, lname: e.target.value };
+                })
+              }
             />
           </Box>
           <MuiTelInput
             id="phone-number"
-            value={phoneNumber}
-            onChange={handlePhoneChange}
+            value={formData.phone}
+            onChange={(newValue) =>
+              setFormData((prev) => {
+                return { ...prev, phone: newValue };
+              })
+            }
             label="Phone Number"
             defaultCountry="IN"
             required
@@ -176,6 +205,12 @@ function ProfilePageDetails({ session }) {
             multiline
             required
             inputProps={{ maxLength: 65 }}
+            value={formData.addressLine1}
+            onChange={(e) =>
+              setFormData((prev) => {
+                return { ...prev, addressLine1: e.target.value };
+              })
+            }
           />
           <TextField
             id="outlined-textarea"
@@ -183,6 +218,12 @@ function ProfilePageDetails({ session }) {
             multiline
             required
             inputProps={{ maxLength: 65 }}
+            value={formData.addressLine2}
+            onChange={(e) =>
+              setFormData((prev) => {
+                return { ...prev, addressLine2: e.target.value };
+              })
+            }
           />
           <TextField
             id="city"
@@ -190,6 +231,12 @@ function ProfilePageDetails({ session }) {
             variant="outlined"
             required
             sx={{ width: "50%" }}
+            value={formData.city}
+            onChange={(e) =>
+              setFormData((prev) => {
+                return { ...prev, city: e.target.value };
+              })
+            }
           />
           <Autocomplete
             disablePortal
@@ -197,6 +244,12 @@ function ProfilePageDetails({ session }) {
             id="combo-box-demo"
             options={statesAndUTs}
             sx={{ width: 300 }}
+            value={formData.state}
+            onChange={(e) =>
+              setFormData((prev) => {
+                return { ...prev, state: e.target.textContent };
+              })
+            }
             renderInput={(params) => <TextField {...params} label="State" />}
           />
           <TextField
@@ -205,6 +258,12 @@ function ProfilePageDetails({ session }) {
             variant="outlined"
             required
             sx={{ width: "50%" }}
+            value={formData.country}
+            onChange={(e) =>
+              setFormData((prev) => {
+                return { ...prev, country: e.target.value };
+              })
+            }
           />
           <Button
             type="submit"
