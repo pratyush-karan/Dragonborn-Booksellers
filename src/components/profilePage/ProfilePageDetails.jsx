@@ -8,6 +8,8 @@ import { MuiTelInput, matchIsValidTel } from "mui-tel-input";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "@/redux/features/profile-slice";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 function ProfilePageDetails({ session }) {
   const gridStyles = {
@@ -18,7 +20,14 @@ function ProfilePageDetails({ session }) {
   };
 
   const dispatch = useDispatch();
+
   const profileDetails = useSelector((state) => state.profileReducer);
+  const [openSnackBar, setOpenSnackBar] = useState({
+    open: false,
+    vertical: "top",
+    horizontal: "center",
+  });
+
   const [formData, setFormData] = useState(
     useSelector((state) => state.profileReducer)
   );
@@ -72,11 +81,24 @@ function ProfilePageDetails({ session }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateProfile(formData));
+    handleOpenSnackBar();
   };
 
   useEffect(() => {
     setFormData(profileDetails);
   }, [profileDetails]);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenSnackBar({ ...openSnackBar, open: false });
+  };
+
+  const handleOpenSnackBar = () => {
+    setOpenSnackBar({ ...openSnackBar, open: true });
+  };
 
   return (
     <Grid
@@ -90,6 +112,23 @@ function ProfilePageDetails({ session }) {
         flexDirection: { xs: "column", lg: "row" },
       }}
     >
+      <Snackbar
+        anchorOrigin={{
+          vertical: openSnackBar.vertical,
+          horizontal: openSnackBar.horizontal,
+        }}
+        open={openSnackBar.open}
+        onClose={handleClose}
+        autoHideDuration={3000}
+      >
+        <Alert
+          onClose={handleClose}
+          severity="success"
+          // variant="filled"
+        >
+          Profile is Updated!
+        </Alert>
+      </Snackbar>
       <Grid
         item
         lg={3}
