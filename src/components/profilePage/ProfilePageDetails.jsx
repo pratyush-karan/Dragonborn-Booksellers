@@ -62,6 +62,11 @@ function ProfilePageDetails({ session }) {
     "West Bengal",
   ];
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("hi");
+  };
+
   return (
     <Grid
       container
@@ -122,80 +127,94 @@ function ProfilePageDetails({ session }) {
         xs={9}
         sx={{
           ...gridStyles,
-          display: "flex",
-          flexDirection: "column",
-          padding: "1rem",
-          gap: "2rem",
+          //   display: "flex",
+          //   flexDirection: "column",
+          //   padding: "1rem",
+          //   gap: "2rem",
         }}
       >
-        <Typography variant="h5" fontWeight={"bold"}>
-          Profile Settings
-        </Typography>
         <Box
-          sx={{ display: "flex", justifyContent: "flex-start", gap: "2rem" }}
+          component="form"
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            padding: "1rem",
+            gap: "2rem",
+          }}
+          onSubmit={handleSubmit}
         >
-          <TextField
-            id="fname"
-            label="First Name"
-            variant="outlined"
+          <Typography variant="h5" fontWeight={"bold"}>
+            Profile Settings
+          </Typography>
+          <Box
+            sx={{ display: "flex", justifyContent: "flex-start", gap: "2rem" }}
+          >
+            <TextField
+              id="fname"
+              label="First Name"
+              variant="outlined"
+              required
+            />
+            <TextField
+              id="lname"
+              label="Last Name"
+              variant="outlined"
+              required
+            />
+          </Box>
+          <MuiTelInput
+            id="phone-number"
+            value={phoneNumber}
+            onChange={handlePhoneChange}
+            label="Phone Number"
+            defaultCountry="IN"
             required
           />
-          <TextField id="lname" label="Last Name" variant="outlined" required />
+          <TextField
+            id="outlined-textarea"
+            label="Address Line 1"
+            multiline
+            required
+            inputProps={{ maxLength: 65 }}
+          />
+          <TextField
+            id="outlined-textarea"
+            label="Address Line 2"
+            multiline
+            required
+            inputProps={{ maxLength: 65 }}
+          />
+          <TextField
+            id="city"
+            label="City"
+            variant="outlined"
+            required
+            sx={{ width: "50%" }}
+          />
+          <Autocomplete
+            disablePortal
+            required
+            id="combo-box-demo"
+            options={statesAndUTs}
+            sx={{ width: 300 }}
+            renderInput={(params) => <TextField {...params} label="State" />}
+          />
+          <TextField
+            id="country"
+            label="Country"
+            variant="outlined"
+            required
+            sx={{ width: "50%" }}
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{ width: "80px", height: "30px" }}
+            color="secondary"
+          >
+            Save
+          </Button>
         </Box>
-        <MuiTelInput
-          value={phoneNumber}
-          onChange={handlePhoneChange}
-          label="Phone Number"
-          defaultCountry="IN"
-        />
-
-        <TextField
-          id="outlined-textarea"
-          label="Address Line 1"
-          multiline
-          required
-          inputProps={{ maxLength: 65 }}
-        />
-
-        <TextField
-          id="outlined-textarea"
-          label="Address Line 2"
-          multiline
-          required
-          inputProps={{ maxLength: 65 }}
-        />
-
-        <TextField
-          id="city"
-          label="City"
-          variant="outlined"
-          required
-          sx={{ width: "50%" }}
-        />
-
-        <Autocomplete
-          disablePortal
-          required
-          id="combo-box-demo"
-          options={statesAndUTs}
-          sx={{ width: 300 }}
-          renderInput={(params) => <TextField {...params} label="State" />}
-        />
-        <TextField
-          id="country"
-          label="Country"
-          variant="outlined"
-          required
-          sx={{ width: "50%" }}
-        />
-
-        <Button
-          variant="contained"
-          sx={{ width: "80px", height: "30px" }}
-          color="secondary"
-        >
-          Save
-        </Button>
       </Grid>
     </Grid>
   );
