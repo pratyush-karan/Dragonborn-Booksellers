@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useRouter } from "next-nprogress-bar";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
-
+import { sanitizeHtml } from "../ui-library/helpers";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
@@ -117,17 +117,6 @@ function BookDetails({ bookData }) {
       ),
     },
   ];
-
-  const sanitizeHtml = (html) => {
-    const domParser = new DOMParser();
-    const doc = domParser.parseFromString(html, "text/html");
-
-    // Remove script tags (or other potentially risky elements if needed)
-    const scripts = doc.querySelectorAll("script");
-    scripts.forEach((script) => script.remove());
-
-    return doc.body.innerHTML.replace(/^_*|_*$/g, "");
-  };
 
   const sanitizedDescription = sanitizeHtml(bookData.volumeInfo.description);
 

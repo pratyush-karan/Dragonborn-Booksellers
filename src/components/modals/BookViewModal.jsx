@@ -14,6 +14,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import Image from "next/image";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { sanitizeHtml } from "../ui-library/helpers";
 
 export default function BasicUsage({
   open,
@@ -31,6 +32,8 @@ export default function BasicUsage({
       return arr.join(",");
     }
   };
+
+  const sanitizedDescription = sanitizeHtml(description);
 
   return (
     <Modal
@@ -158,17 +161,20 @@ export default function BasicUsage({
             </Grid>
           </Box>
 
-          {description && (
+          <Typography variant="h6">Description:-</Typography>
+          {description ? (
             <Typography
+              dangerouslySetInnerHTML={{
+                __html: sanitizedDescription || description, // Fallback for non-HTML descriptions
+              }}
               sx={{
-                margin: "1rem 0px",
+                height: "auto",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
-                maxHeight: "500px",
               }}
-            >
-              {description.replace(/^_*|_*$/g, "")}
-            </Typography>
+            />
+          ) : (
+            <Typography>No Description Avaliable</Typography>
           )}
 
           <Divider sx={{ width: "100%", margin: "1rem 0px" }} />
