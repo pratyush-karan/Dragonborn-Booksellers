@@ -34,6 +34,7 @@ export default function CartDetails() {
         height: "fit-content",
         margin: "4rem auto",
         border: (theme) => `1px solid ${theme.palette.tertiary.main}`,
+        backgroundColor: (theme) => `${theme.palette.white.main}`,
         borderRadius: "10px",
         boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.15)",
       }}

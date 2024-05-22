@@ -86,8 +86,15 @@ export default function NavBar({ children }) {
   }));
   const bookList = useSelector((state) => state.cartReducer);
 
+  const routeStyles = () => {
+    if (pathname === "/cart" || pathname === "/profile")
+      return (theme) => theme.palette.tertiaryLight.main;
+    else return (theme) => theme.palette.white.main;
+  };
   return (
-    <>
+    <Box
+      sx={{ backgroundColor: routeStyles(), width: "100%", height: "100vh" }}
+    >
       <AppBar
         position="sticky"
         sx={{
@@ -291,6 +298,6 @@ export default function NavBar({ children }) {
       </AppBar>
 
       {children}
-    </>
+    </Box>
   );
 }
