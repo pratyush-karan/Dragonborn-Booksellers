@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "@/redux/features/profile-slice";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import isEqual from "lodash/isEqual";
 
 function ProfilePageDetails({ session }) {
   const gridStyles = {
@@ -309,6 +310,7 @@ function ProfilePageDetails({ session }) {
             variant="contained"
             sx={{ width: "80px", height: "30px" }}
             color="secondary"
+            disabled={isEqual(formData, profileDetails)}
           >
             Save
           </Button>

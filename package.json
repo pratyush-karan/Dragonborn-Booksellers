@@ -15,6 +15,7 @@
     "@mui/material-nextjs": "^5.15.11",
     "@reduxjs/toolkit": "^2.2.2",
     "embla-carousel-react": "^8.0.4",
+    "lodash": "^4.17.21",
     "mui-tel-input": "^5.1.2",
     "next": "^14.2.3",
     "next-auth": "^4.24.7",
