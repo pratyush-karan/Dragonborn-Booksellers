@@ -58,7 +58,7 @@ export default function NavBar({ children }) {
   };
 
   const handleSignIn = () => {
-    signIn();
+    signIn("google");
   };
 
   const handleMenuItem = (setting) => {
@@ -287,7 +287,10 @@ export default function NavBar({ children }) {
                 </>
               ) : (
                 <>
-                  <Button color="white" onClick={handleSignIn}>
+                  <Button
+                    color="white"
+                    onClick={() => router.push("/auth/signIn")}
+                  >
                     Login
                   </Button>
                 </>
