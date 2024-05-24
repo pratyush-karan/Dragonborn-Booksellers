@@ -12,7 +12,7 @@ function LoginCard() {
     signOut();
   };
 
-  const handleSignIn = async () => {
+  const handleSignIn = () => {
     signIn("google", {
       redirect: true,
       callbackUrl: "/",
@@ -62,7 +62,11 @@ function LoginCard() {
           )}
         </>
       ) : (
-        <Button onClick={handleLogout} variant="outlined">
+        <Button
+          onClick={handleLogout}
+          variant="outlined"
+          sx={{ margin: "2rem 0rem" }}
+        >
           Logout
         </Button>
       )}
