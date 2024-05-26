@@ -1,22 +1,27 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Box, Typography, Button, Grid } from "@mui/material";
+import { Box, Typography, Button, Grid, CircularProgress } from "@mui/material";
 import {
   addItemToCart,
   removeItemFromCart,
   removeItemsFromCart,
   removeAllItemsFromCart,
 } from "@/redux/features/cart-slice";
+import moment from "moment";
+import { addOrderDetails } from "@/redux/features/order-slice";
 import { useDispatch, useSelector } from "react-redux";
 import CartItemCard from "./CartItemCard";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next-nprogress-bar";
 
 export default function CartDetails() {
+  const router = useRouter();
   const dispatch = useDispatch();
   const { data: session } = useSession();
   const bookList = useSelector((state) => state.cartReducer);
   const profileDetails = useSelector((state) => state.profileReducer);
+  const orderList = useSelector((state) => state.orderReducer);
   const [totalPrice, setTotalPrice] = useState(0);
   const [orderPlaced, setOrderPlaced] = useState(false);
 
@@ -27,25 +32,50 @@ export default function CartDetails() {
   const handleRemoveAll = () => {
     dispatch(removeAllItemsFromCart());
   };
+
+  const calculateTotalPrice = () => {
+    const totalPrice = bookList.itemList.reduce(
+      (acc, e) => acc + e.price.amount * e.qty,
+      0
+    );
+
+    const formatter = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: bookList.itemList[0].price.currencyCode,
+    });
+    return formatter.format(totalPrice);
+  };
+
   useEffect(() => {
     if (bookList.totalItems > 0) {
-      const totalPrice = bookList.itemList.reduce(
-        (acc, e) => acc + e.price.amount * e.qty,
-        0
-      );
-
-      const formatter = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: bookList.itemList[0].price.currencyCode,
-      });
-      const formattedTotalPrice = formatter.format(totalPrice);
-      setTotalPrice(formattedTotalPrice);
+      setTotalPrice(calculateTotalPrice());
     }
   }, [bookList]);
 
   const handlePlaceOrder = () => {
+    const productList = bookList.itemList.map((product) => {
+      return {
+        id: product.id,
+        productName: product.title,
+        qty: product.qty,
+        totalPrice: product.price * product.qty,
+      };
+    });
+    const today = moment();
+    dispatch(
+      addOrderDetails({
+        orderId: orderList.length + 1,
+        orderDate: today.format("MMMM Do, YYYY"),
+        ProductList: productList,
+        TotalPrice: calculateTotalPrice(),
+      })
+    );
+
     handleRemoveAll();
     setOrderPlaced(true);
+    setTimeout(() => {
+      router.push("/orders");
+    }, 3000);
   };
 
   return (
@@ -53,7 +83,6 @@ export default function CartDetails() {
       sx={{
         display: "flex",
         flexDirection: "column",
-
         width: "90%",
         padding: "1.5rem",
         height: "fit-content",
@@ -64,7 +93,7 @@ export default function CartDetails() {
         boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.15)",
       }}
     >
-      {/* {console.log("bookList", bookList)} */}
+      {console.log("bookList", bookList)}
       <>
         {!orderPlaced ? (
           <>
@@ -85,8 +114,13 @@ export default function CartDetails() {
                 </Box>
 
                 <Grid container rowGap={5}>
-                  <Grid item xs={12}></Grid>
-                  <Grid item lg={8} xs={12} order={{ lg: 1, xs: 2 }}>
+                  <Grid
+                    item
+                    lg={8}
+                    xs={12}
+                    order={{ lg: 1, xs: 2 }}
+                    sx={{ paddingRight: "1rem" }}
+                  >
                     <Box
                       sx={{
                         display: "flex",
@@ -159,22 +193,37 @@ export default function CartDetails() {
                                 },
                               }}
                             >
-                              Add to cart
+                              Place Order
                             </Button>
                           </>
                         ) : (
                           <>
                             <Typography variant="h6">
                               Add Address and Contact info on the{" "}
-                              <Link href="/profile">proifle page</Link>
+                              <Link
+                                href="/profile"
+                                style={{
+                                  color: "#f44336",
+                                }}
+                              >
+                                proifle page
+                              </Link>
                             </Typography>
                           </>
                         )}
                       </>
                     ) : (
-                      <>
-                        to continue <Link href="/auth/signIn">Login </Link>
-                      </>
+                      <Typography variant="h6">
+                        to continue placing your order{" "}
+                        <Link
+                          href="/auth/signIn"
+                          style={{
+                            color: "#f44336",
+                          }}
+                        >
+                          Login{" "}
+                        </Link>
+                      </Typography>
                     )}
                   </Grid>
                 </Grid>
@@ -186,15 +235,30 @@ export default function CartDetails() {
             )}
           </>
         ) : (
-          <>
-            <Box>Your Order (orderId:) has been placed successfully!</Box>
-          </>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: (theme) => theme.palette.green.main,
+              width: "70%",
+              margin: "auto",
+              height: "300px",
+              gap: "1rem",
+            }}
+          >
+            <Typography variant="h5" fontWeight="bold">
+              Your Order (orderId:{orderList.length + 1}) has been placed
+              successfully!
+            </Typography>
+            <Typography variant="h6">
+              Please Wait while we route you to the Orders Page!
+            </Typography>
+            <CircularProgress color="secondary" />
+          </Box>
         )}
       </>
     </Box>
   );
 }
-
-// transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-//     border-radius: 4px;
-//     box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
