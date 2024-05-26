@@ -2,7 +2,7 @@
 import React from "react";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
-import OrderDetails from "@/components/ordersPage/orderDetails";
+import OrderDetails from "@/components/ordersPage/OrderDetails";
 
 export default async function OrdersPage() {
   const session = await getServerSession();
