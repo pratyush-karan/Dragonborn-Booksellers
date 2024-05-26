@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, Grid } from "@mui/material";
 import { useRouter } from "next-nprogress-bar";
 
 function CartItemCard({ book, handleRemove }) {
@@ -15,16 +15,18 @@ function CartItemCard({ book, handleRemove }) {
     router.push(`/books/${book.id}`);
   };
   return (
-    <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-      <Image
-        style={{ cursor: "pointer" }}
-        src={book.image}
-        width={100}
-        height={100}
-        alt={book.title}
-        onClick={routeToBookDetailsPage}
-      />
-      <Box>
+    <Grid container>
+      <Grid item xl={1.5} md={2} xs={12}>
+        <Image
+          style={{ cursor: "pointer" }}
+          src={book.image}
+          width={100}
+          height={100}
+          alt={book.title}
+          onClick={routeToBookDetailsPage}
+        />
+      </Grid>
+      <Grid item xl={10.5} md={10} xs={12}>
         <Typography
           variant="h6"
           onClick={routeToBookDetailsPage}
@@ -46,8 +48,8 @@ function CartItemCard({ book, handleRemove }) {
           <Typography variant="body1">Qty: {book.qty}</Typography>
           <Button onClick={() => handleRemove(book.id)}>Delete Item</Button>
         </Box>
-      </Box>
-    </Box>
+      </Grid>
+    </Grid>
   );
 }
 
