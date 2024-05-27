@@ -24,7 +24,7 @@ import { useSelector } from "react-redux";
 import { usePathname } from "next/navigation";
 
 const pages = ["Home", "Books", "Profile"];
-const settings = ["Your Orders", "Wish List", "Logout"];
+const settings = ["Your Orders", "Logout"];
 
 export default function NavBar({ children }) {
   const router = useRouter();
