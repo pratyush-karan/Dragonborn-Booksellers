@@ -87,7 +87,7 @@ function HomePageLayout({ data }) {
 
               <Grid container spacing={2}>
                 {mainCategories.map((category, index) => (
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={6} key={index}>
                     <Box
                       key={category[1]}
                       sx={{
