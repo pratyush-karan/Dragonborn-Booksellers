@@ -85,6 +85,7 @@ export default function NavBar({ children }) {
     },
   }));
   const bookList = useSelector((state) => state.cartReducer);
+  const profileDetails = useSelector((state) => state.profileReducer);
 
   const routeStyles = () => {
     if (
@@ -99,6 +100,7 @@ export default function NavBar({ children }) {
     <Box
       sx={{ backgroundColor: routeStyles(), width: "100%", height: "100vh" }}
     >
+      {console.log("profileDetails", profileDetails)}
       <AppBar
         position="sticky"
         sx={{
@@ -248,7 +250,15 @@ export default function NavBar({ children }) {
                   variant="body2"
                   sx={{ color: (theme) => theme.palette.white.main }}
                 >
-                  Cart
+                  {`${
+                    profileDetails.fname && profileDetails.fname !== ""
+                      ? profileDetails.fname + "'s"
+                      : session &&
+                        session.user &&
+                        session.user.name.split(" ")[0]
+                      ? session.user.name.split(" ")[0] + "'s"
+                      : ""
+                  } Cart`}
                 </Typography>
               </Button>
               {session ? (
