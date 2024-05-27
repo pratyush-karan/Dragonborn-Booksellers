@@ -85,7 +85,7 @@ export default function BasicUsage({
             />
           </Box>
 
-          <Box sx={{ display: "flex", marginTop: "1rem", gap: "1rem" }}>
+          <Box sx={{ display: "flex", margin: "1rem 0 rem", gap: "1rem" }}>
             <Image
               src={`${image}`}
               alt=""
@@ -169,8 +169,9 @@ export default function BasicUsage({
               }}
               sx={{
                 height: "auto",
-                overflow: "hidden",
+                overflowY: "hidden",
                 textOverflow: "ellipsis",
+                maxHeight: "500px",
               }}
             />
           ) : (
