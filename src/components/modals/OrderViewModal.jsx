@@ -58,22 +58,39 @@ function OrderViewModal({ openModal, handleClose, orderList, order }) {
       </DialogTitle>
       <DialogContent>
         <BasicTable rows={rows} headers={headers} />
-        <Typography
-          variant="subtitle1"
+        <Box
           sx={{
-            marginTop: "2rem",
+            margin: "2rem 0rem",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "flex-start",
+            flexDirection: "column",
+          }}
+        >
+          <Typography variant="subtitle1" fontWeight="bold">
+            Shipped To:
+          </Typography>{" "}
+          <Typography variant="subtitle1">{orderList[order].name}</Typography>{" "}
+          <Typography variant="subtitle1">
+            {orderList[order].address}
+          </Typography>{" "}
+        </Box>
+
+        <Box
+          sx={{
             display: "flex",
             justifyContent: "flex-start",
             alignItems: "center",
             gap: "0.5rem",
-            fontWeight: "bold",
           }}
         >
-          SubTotal:{" "}
+          <Typography variant="subtitle1" fontWeight="bold">
+            SubTotal:{" "}
+          </Typography>
           <Typography sx={{ color: (theme) => theme.palette.green.main }}>
             {orderList[order].totalPrice}
           </Typography>
-        </Typography>
+        </Box>
       </DialogContent>
       <DialogActions sx={{ display: "flex", justifyContent: "center" }}>
         <Button onClick={handleClose}>Close</Button>

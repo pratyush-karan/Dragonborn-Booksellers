@@ -37,6 +37,8 @@ function OrderDetails() {
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
 
+  console.log("orderList", orderList);
+
   return (
     <Box
       sx={{

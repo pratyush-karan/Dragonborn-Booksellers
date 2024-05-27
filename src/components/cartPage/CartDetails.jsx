@@ -75,6 +75,9 @@ export default function CartDetails() {
         orderDate: today.format("MMMM Do, YYYY"),
         productList: productList,
         totalPrice: calculateTotalPrice(),
+        name: profileDetails.fname + " " + profileDetails.lname,
+        address:
+          profileDetails.addressLine1 + " " + profileDetails.addressLine2,
       })
     );
 
@@ -84,7 +87,7 @@ export default function CartDetails() {
       router.push("/orders");
     }, 3000);
   };
-
+  console.log("profileDetails", profileDetails);
   return (
     <Box
       sx={{
