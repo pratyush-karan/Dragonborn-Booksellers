@@ -87,7 +87,11 @@ export default function NavBar({ children }) {
   const bookList = useSelector((state) => state.cartReducer);
 
   const routeStyles = () => {
-    if (pathname === "/cart" || pathname === "/profile")
+    if (
+      pathname === "/cart" ||
+      pathname === "/profile" ||
+      pathname === "/orders"
+    )
       return (theme) => theme.palette.tertiaryLight.main;
     else return (theme) => theme.palette.white.main;
   };

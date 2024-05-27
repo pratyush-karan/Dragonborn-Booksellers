@@ -30,7 +30,7 @@ function CartItemCard({ book, handleRemove }) {
         <Typography
           variant="h6"
           onClick={routeToBookDetailsPage}
-          sx={{ cursor: "pointer" }}
+          sx={{ cursor: "pointer", width: "fit-content" }}
         >
           {book.title}
         </Typography>

@@ -33,17 +33,20 @@ export default function CartDetails() {
     dispatch(removeAllItemsFromCart());
   };
 
+  const priceFormatter = (price, currencyCode) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: currencyCode,
+    }).format(price);
+  };
+
   const calculateTotalPrice = () => {
     const totalPrice = bookList.itemList.reduce(
       (acc, e) => acc + e.price.amount * e.qty,
       0
     );
 
-    const formatter = new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: bookList.itemList[0].price.currencyCode,
-    });
-    return formatter.format(totalPrice);
+    return priceFormatter(totalPrice, bookList.itemList[0].price.currencyCode);
   };
 
   useEffect(() => {
@@ -58,16 +61,20 @@ export default function CartDetails() {
         id: product.id,
         productName: product.title,
         qty: product.qty,
-        totalPrice: product.price * product.qty,
+        totalPrice: priceFormatter(
+          product.price.amount * product.qty,
+          product.price.currencyCode
+        ),
       };
     });
+
     const today = moment();
     dispatch(
       addOrderDetails({
         orderId: orderList.length + 1,
         orderDate: today.format("MMMM Do, YYYY"),
-        ProductList: productList,
-        TotalPrice: calculateTotalPrice(),
+        productList: productList,
+        totalPrice: calculateTotalPrice(),
       })
     );
 
@@ -93,7 +100,6 @@ export default function CartDetails() {
         boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.15)",
       }}
     >
-      {console.log("bookList", bookList)}
       <>
         {!orderPlaced ? (
           <>
@@ -206,7 +212,7 @@ export default function CartDetails() {
                                   color: "#f44336",
                                 }}
                               >
-                                proifle page
+                                profile page
                               </Link>
                             </Typography>
                           </>
@@ -249,7 +255,7 @@ export default function CartDetails() {
             }}
           >
             <Typography variant="h5" fontWeight="bold">
-              Your Order (orderId:{orderList.length + 1}) has been placed
+              Your Order (orderId:{orderList.length}) has been placed
               successfully!
             </Typography>
             <Typography variant="h6">
