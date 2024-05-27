@@ -16,7 +16,11 @@ export default function BasicTable({ rows, headers }) {
         <TableHead>
           <TableRow>
             {headers.map((header) => (
-              <TableCell align="center" key={header}>
+              <TableCell
+                align="center"
+                key={header}
+                sx={{ fontWeight: "bold", fontSize: "1rem" }}
+              >
                 {header}
               </TableCell>
             ))}
@@ -29,7 +33,7 @@ export default function BasicTable({ rows, headers }) {
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               {row.map((rowItem, index) => (
-                <TableCell align="center" key={index}>
+                <TableCell align="center" key={index} sx={{ fontSize: "1rem" }}>
                   {rowItem}
                 </TableCell>
               ))}
