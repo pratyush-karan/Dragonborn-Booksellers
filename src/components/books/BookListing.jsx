@@ -201,7 +201,7 @@ function BookListing({ initialBooks, getBooksAction }) {
         onInputChange={handleInputChange}
         query={query}
       />
-      {console.log(books)}
+
       <Snackbar
         anchorOrigin={{
           vertical: openSnackBar.vertical,
@@ -222,7 +222,7 @@ function BookListing({ initialBooks, getBooksAction }) {
       <Grid container spacing={2}>
         <Grid
           item
-          xs={4}
+          xs={12}
           md={2}
           sx={{
             display: "flex",
@@ -297,7 +297,7 @@ function BookListing({ initialBooks, getBooksAction }) {
 
         <Grid
           item
-          xs={8}
+          xs={12}
           md={10}
           sx={{
             display: "flex",
@@ -315,7 +315,7 @@ function BookListing({ initialBooks, getBooksAction }) {
                 <Box
                   sx={{
                     display: "flex",
-                    justifyContent: "flex-start",
+                    justifyContent: "center",
                     flexWrap: "wrap",
                     flexDirection: "row",
                     textAlign: "center",

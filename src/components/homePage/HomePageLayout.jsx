@@ -40,7 +40,11 @@ function HomePageLayout({ data }) {
       BestSellers: "inspirational",
       "Top Authors": "authors",
     };
-    router.push(`/books?query=${routes[category]}`);
+    if (category !== "New Releases") {
+      router.push(`/books?category=${routes[category]}`);
+    } else {
+      router.push(`/books?query=${routes[category]}`);
+    }
   };
 
   return (
@@ -130,7 +134,7 @@ function HomePageLayout({ data }) {
                   alignItems: "center",
                   margin: "1rem 0rem",
                   fontWeight: "bold",
-                  cursor: "pointer",
+
                   ":hover .explore-all": {
                     opacity: 1,
                     visibility: "visible",
@@ -151,7 +155,10 @@ function HomePageLayout({ data }) {
                     justifyContent: "center",
                   }}
                 >
-                  <span onClick={() => handleExploreAll(category[0])}>
+                  <span
+                    onClick={() => handleExploreAll(category[0])}
+                    style={{ cursor: "pointer" }}
+                  >
                     Explore All
                   </span>
                   <KeyboardArrowRightIcon />

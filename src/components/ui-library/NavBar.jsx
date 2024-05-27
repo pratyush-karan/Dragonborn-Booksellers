@@ -100,7 +100,6 @@ export default function NavBar({ children }) {
     <Box
       sx={{ backgroundColor: routeStyles(), width: "100%", height: "100vh" }}
     >
-      {console.log("profileDetails", profileDetails)}
       <AppBar
         position="sticky"
         sx={{
