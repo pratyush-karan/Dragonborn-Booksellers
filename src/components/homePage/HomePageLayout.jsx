@@ -40,11 +40,11 @@ function HomePageLayout({ data }) {
       BestSellers: "inspirational",
       "Top Authors": "authors",
     };
-    if (category !== "New Releases") {
-      router.push(`/books?category=${routes[category]}`);
-    } else {
-      router.push(`/books?query=${routes[category]}`);
-    }
+    // if (category !== "New Releases") {
+    //   router.push(`/books?category=${routes[category]}`);
+    // } else {
+    router.push(`/books?query=${routes[category]}`);
+    // }
   };
 
   return (

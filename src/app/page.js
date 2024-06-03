@@ -14,20 +14,34 @@ export default async function HomePage() {
       // filter: "ebooks",
     });
 
-    if (res.items) return res.items;
+    if (res.items)
+      return res.items.sort((a, b) => {
+        if (
+          a.saleInfo.saleability === "FOR_SALE" &&
+          b.saleInfo.saleability !== "FOR_SALE"
+        )
+          return -1;
+        if (
+          a.saleInfo.saleability !== "FOR_SALE" &&
+          b.saleInfo.saleability === "FOR_SALE"
+        )
+          return 1;
+
+        return 0;
+      });
     else return [];
   };
   const dailyTop100 = await getCarouselBooks({
-    category: "fantasy",
+    query: "fantasy",
   });
   const newReleases = await getCarouselBooks({
     query: "new+releases",
   });
   const bestSellers = await getCarouselBooks({
-    category: "inspirational",
+    query: "inspirational",
   });
   const topAuthors = await getCarouselBooks({
-    category: "authors",
+    query: "authors",
   });
   return (
     <HomePageLayout
