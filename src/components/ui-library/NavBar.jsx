@@ -96,6 +96,15 @@ export default function NavBar({ children }) {
       return (theme) => theme.palette.tertiaryLight.main;
     else return (theme) => theme.palette.white.main;
   };
+
+  const getCartName = () => {
+    if (session) {
+      if (profileDetails.fname) return `${profileDetails.fname}'s Cart`;
+      else return `${session.user.name.split(" ")[0]}'s Cart`;
+    } else {
+      return "Cart";
+    }
+  };
   return (
     <Box
       sx={{ backgroundColor: routeStyles(), width: "100%", height: "100vh" }}
@@ -249,15 +258,7 @@ export default function NavBar({ children }) {
                   variant="body2"
                   sx={{ color: (theme) => theme.palette.white.main }}
                 >
-                  {`${
-                    profileDetails.fname && profileDetails.fname !== ""
-                      ? profileDetails.fname + "'s"
-                      : session &&
-                        session.user &&
-                        session.user.name.split(" ")[0]
-                      ? session.user.name.split(" ")[0] + "'s"
-                      : ""
-                  } Cart`}
+                  {getCartName()}
                 </Typography>
               </Button>
               {session ? (
