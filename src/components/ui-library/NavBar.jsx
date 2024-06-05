@@ -167,6 +167,7 @@ export default function NavBar({ children }) {
                 sx={{
                   display: { xs: "block", md: "none" },
                 }}
+                disableScrollLock={true}
               >
                 {pages.map((page) => (
                   <MenuItem
@@ -283,6 +284,7 @@ export default function NavBar({ children }) {
                     }}
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
+                    disableScrollLock={true}
                   >
                     {settings.map((setting, index) => (
                       <MenuItem

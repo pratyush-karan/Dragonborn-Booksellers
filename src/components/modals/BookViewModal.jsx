@@ -48,6 +48,7 @@ export default function BasicUsage({
           timeout: 500,
         },
       }}
+      disableScrollLock={true}
     >
       <Fade in={open}>
         <Box
